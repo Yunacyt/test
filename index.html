@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>靜夜檔案｜MIDNIGHT ARCHIVES</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main id="home-screen" class="home-screen">
+    <div class="title-frame">
+      <p class="file-label">調查記錄室 ── 第一卷</p>
+      <div class="title-rule" aria-hidden="true"></div>
+      <h1>靜夜檔案</h1>
+      <p class="english-title">MIDNIGHT ARCHIVES</p>
+      <p class="tagline">「有些真相，只會在安靜之後留下痕跡。」</p>
+      <button id="start-button" class="start-button" type="button">開始調查 <span aria-hidden="true">→</span></button>
+      <p class="title-footer">CASE FILE / INTERACTIVE MYSTERY</p>
+    </div>
+  </main>
+
+  <main id="case-screen" class="case-screen" hidden>
+    <header class="case-header">
+      <div>
+        <p class="file-label">MIDNIGHT ARCHIVES / CASE 001</p>
+        <h1 id="case-heading" tabindex="-1">雨夜的最後一杯茶</h1>
+        <p class="header-note">青葉圖書館 · 館長室 / 2026.09.18</p>
+      </div>
+      <div class="case-stats">
+        <span id="case-status" class="status-stamp">UNSOLVED</span>
+        <p>剩餘行動力 <strong id="action-count">8</strong><span> / 8</span></p>
+      </div>
+    </header>
+    <p id="action-message" class="action-message" role="status">每次詢問或調查消耗 1 點；已取得的內容可免費重讀。</p>
+
+    <nav class="section-navigation" aria-label="調查區域">
+      <button type="button" class="section-button active" data-section="case" aria-pressed="true" aria-controls="case-panel"><span>01</span>案件</button>
+      <button type="button" class="section-button" data-section="people" aria-pressed="false" aria-controls="people-panel"><span>02</span>人物</button>
+      <button type="button" class="section-button" data-section="evidence" aria-pressed="false" aria-controls="evidence-panel"><span>03</span>證物</button>
+      <button type="button" class="section-button" data-section="reasoning" aria-pressed="false" aria-controls="reasoning-panel"><span>04</span>推理</button>
+    </nav>
+
+    <div class="document">
+      <section id="case-panel" class="section-panel" aria-labelledby="case-title">
+        <p class="document-label">FILE 01 / INCIDENT REPORT</p>
+        <h2 id="case-title">閉館後，雨聲未停。</h2>
+        <p class="lead">晚間八點四十分，館長高橋修一被發現倒在館長室內。桌上的茶已經冷了，三位與他有關的人仍留在圖書館。</p>
+        <dl class="case-facts">
+          <div><dt>案發時間</dt><dd>2026 年 9 月 18 日，20:10–20:30</dd></div>
+          <div><dt>案發地點</dt><dd>青葉圖書館二樓 · 館長室</dd></div>
+          <div><dt>死者</dt><dd>高橋修一 · 圖書館館長</dd></div>
+        </dl>
+        <h3>目前已知資訊</h3>
+        <ul class="known-facts">
+          <li>初步檢驗顯示，死者喝下含有毒物的茶；現場沒有打鬥痕跡。</li>
+          <li>值班紀錄與走廊監視器確認：20:00 茶備妥後，僅三名嫌疑人有機會接近館長室。</li>
+          <li>三人各持一把鑰匙。除了桌上的茶，現場沒有其他飲食。</li>
+        </ul>
+        <p class="paper-note">調查方向 / 對照證詞與物品留下的時間，找出誰的敘述不可信。</p>
+      </section>
+
+      <section id="people-panel" class="section-panel" aria-labelledby="people-title" hidden>
+        <p class="document-label">FILE 02 / PERSONS OF INTEREST</p>
+        <h2 id="people-title">三份尚待核對的證詞</h2>
+        <p class="section-intro">點擊人物查看紀錄，再選擇「詢問」取得證詞。</p>
+        <div id="people-list" class="card-grid"></div>
+      </section>
+
+      <section id="evidence-panel" class="section-panel" aria-labelledby="evidence-title" hidden>
+        <p class="document-label">FILE 03 / EVIDENCE REGISTER</p>
+        <h2 id="evidence-title">物品不會說謊</h2>
+        <p class="section-intro">每項調查消耗 1 點行動力，線索會保留在對應的證物下方。</p>
+        <div id="evidence-list" class="card-grid"></div>
+      </section>
+
+      <section id="reasoning-panel" class="section-panel" aria-labelledby="reasoning-title" hidden>
+        <p class="document-label">FILE 04 / FINAL DEDUCTION</p>
+        <h2 id="reasoning-title">誰留下了最後的痕跡？</h2>
+        <p class="section-intro">對照取得的證詞與線索，選擇你認為的犯人。提交推理不消耗行動力。</p>
+        <form id="reasoning-form">
+          <fieldset>
+            <legend>指認嫌疑人</legend>
+            <div id="suspect-options" class="suspect-options"></div>
+          </fieldset>
+          <button id="submit-reasoning" class="paper-button" type="submit" disabled>提交推理 <span aria-hidden="true">→</span></button>
+        </form>
+        <div id="reasoning-result" class="paper-note result" role="status" hidden></div>
+      </section>
+      <div class="document-footer" aria-hidden="true"><span>青葉署 / 調查資料</span><span>CASE 001 ─ CONFIDENTIAL</span></div>
+    </div>
+    <footer class="case-footer">靜夜檔案 / 有些真相，只會在安靜之後留下痕跡。</footer>
+  </main>
+</body>
+</html>
