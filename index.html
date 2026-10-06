@@ -20,7 +20,18 @@
     </div>
   </main>
 
+  <main id="selection-screen" class="case-screen" hidden>
+    <p class="file-label">MIDNIGHT ARCHIVES / CASE FILE</p>
+    <h1 tabindex="-1" id="selection-heading">選擇調查檔案</h1>
+    <p class="header-note">兩份檔案均可直接調查。返回此處不會清除本次遊玩的進度。</p>
+    <div class="case-selection">
+      <button class="case-choice" data-case="001" type="button"><span class="file-label">CASE 001</span><strong>雨夜的最後一杯茶</strong><span>場景：雨夜圖書館</span><span>難度：★☆☆☆☆</span><span>開啟檔案 →</span></button>
+      <button class="case-choice" data-case="002" type="button"><span class="file-label">CASE 002</span><strong>水聲停止之前</strong><span>場景：公寓</span><span>難度：★★☆☆☆</span><span>開啟檔案 →</span></button>
+    </div>
+  </main>
+
   <main id="case-screen" class="case-screen" hidden>
+    <button type="button" class="return-button">← 返回案件選擇</button>
     <header class="case-header">
       <div>
         <p class="file-label">MIDNIGHT ARCHIVES / CASE 001</p>
@@ -91,5 +102,50 @@
     </div>
     <footer class="case-footer">靜夜檔案 / 有些真相，只會在安靜之後留下痕跡。</footer>
   </main>
+  <main id="case-two-screen" class="case-screen" hidden>
+    <button type="button" class="return-button">← 返回案件選擇</button>
+    <header class="case-header">
+      <div><p class="file-label">MIDNIGHT ARCHIVES / CASE 002</p><h1 id="case-two-heading" tabindex="-1">水聲停止之前</h1><p class="header-note">夕凪公寓 · 203 / 2026.09.24</p></div>
+      <div class="case-stats"><span id="two-status" class="status-stamp">UNSOLVED</span><p>剩餘行動力 <strong id="two-points">12</strong><span> / 12</span></p></div>
+    </header>
+    <p id="two-action-message" class="action-message" role="status"></p>
+    <nav class="section-navigation" aria-label="CASE 002 調查區域">
+      <button class="two-tab section-button active" data-panel="overview" aria-pressed="true" aria-controls="two-overview" type="button"><span>01</span>案件</button>
+      <button class="two-tab section-button" data-panel="people" aria-pressed="false" aria-controls="two-people" type="button"><span>02</span>人物</button>
+      <button class="two-tab section-button" data-panel="evidence" aria-pressed="false" aria-controls="two-evidence" type="button"><span>03</span>證物</button>
+      <button class="two-tab section-button" data-panel="reasoning" aria-pressed="false" aria-controls="two-reasoning" type="button"><span>04</span>推理</button>
+    </nav>
+    <div class="document">
+      <section id="two-overview" class="two-panel section-panel">
+        <p class="document-label">FILE 01 / INCIDENT REPORT</p><h2>水聲，曾替誰作證？</h2>
+        <p class="lead">「你聽見的是真的，你看見的也是真的，但你以為發生的事，未必真的發生過。」</p>
+        <p>高橋莉奈，28 歲，工作穩定、親切而有教養。鄰居總說她很會照顧人。約 22:05，房東依事前約定前來檢修浴室漏水；敲門無人回應，電話也無人接聽。擔心住戶安全的房東使用備用鑰匙進屋，發現莉奈倒在浴室。房東僅是發現者，不列入主要嫌疑人。</p>
+        <dl class="case-facts"><div><dt>地點</dt><dd>夕凪公寓 203</dd></div><div><dt>發現時間</dt><dd>2026.09.24 約 22:05</dd></div><div><dt>初始推定死亡時間</dt><dd><span id="initial-time">21:12–22:05</span><br><strong id="current-time"></strong></dd></div></dl>
+        <h3>公寓配置</h3><p>普通的兩層老式日式公寓，房間並排，門口面向長條形開放式戶外走廊。金屬樓梯連接兩層，夜裡走廊只有昏黃燈光。房間後方有陽台，相鄰陽台之間只有隔板。隔音普通，樓下能聽到樓上的水管聲。</p>
+        <div class="apartment-plan" aria-label="二樓203莉奈、204拓海；一樓103真紀位於203正下方"><div>二樓｜203 莉奈 ─ 隔板 ─ 204 拓海</div><div>一樓｜103 真紀（203 正下方）</div></div>
+        <h3>初步判斷</h3><p>21:12 的熱水紀錄，加上真紀聽見水聲，讓警方暫時認為莉奈當時仍活著、正在洗澡。千夏 20:47 離開，表面上不在這段推定時間內。</p>
+        <p class="paper-note">調查規則：16 個項目、12 點行動力。組合與對質免費；關鍵推論首次成功返還 1 點。行動力耗盡後，尚未取得的必要資料可免費補充核對，避免調查中斷。高中資料在錄音取得後解鎖免費核對。</p>
+        <div id="timeline-log" class="paper-note" role="status">暫定：21:12 水聲 → 莉奈仍活著？這仍是推測。</div>
+      </section>
+      <section id="two-people" class="two-panel section-panel" hidden><p class="document-label">FILE 02 / TESTIMONIES</p><h2>四個人，四種沉默</h2><div id="two-people-list" class="card-grid"></div></section>
+      <section id="two-evidence" class="two-panel section-panel" hidden><p class="document-label">FILE 03 / EVIDENCE REGISTER</p><h2>留下來的痕跡</h2><p class="section-intro">優先核對水聲、生活習慣與現場；已調查資料可免費重讀。</p><div id="two-evidence-list" class="card-grid"></div></section>
+      <section id="two-reasoning" class="two-panel section-panel" hidden>
+        <p class="document-label">FILE 04 / DEDUCTION NOTEBOOK</p><h2>把事實與解讀分開</h2>
+        <div class="reasoning-block"><h3>證據組合</h3><p>選擇兩項已取得的資料或已解鎖的推論。錯誤組合不扣點。</p>
+          <form id="combine-form" class="compare-form"><label>第一項<select id="combine-first" required></select></label><label>第二項<select id="combine-second" required></select></label><button class="paper-button" type="submit">組合／比對</button></form>
+          <p id="combine-feedback" role="status"></p><details class="guide"><summary>查看推理方向</summary><ol><li>怕熱的證詞 × 給湯器；回家習慣 × 真紀證詞；再比對這兩份推論。</li><li>茶漬 × 碎杯 → 再核對清潔痕跡 → 再核對矮櫃。</li><li>手機 × 錄音 → 再比對客廳推論 → 再核對真紀的離開目擊。</li><li>時間線重建後，核對浴室痕跡與自動注水，釐清搬動遺體及偽造現場。</li></ol></details>
+          <div id="deduction-list"></div>
+        </div>
+        <div class="reasoning-block"><h3>對質 / CONTRADICTION</h3><p>選擇一段已取得的證詞，以及支持反駁的資料。對質成功會免費解鎖新證詞。</p>
+          <form id="confront-form" class="compare-form"><label>證詞<select id="confront-person" required></select></label><label>反駁資料<select id="confront-evidence" required></select></label><button class="paper-button" type="submit">提出矛盾</button></form><p id="confront-feedback" role="status"></p><div id="confrontations"></div>
+        </div>
+        <div class="reasoning-block"><h3>最終推理</h3><p id="final-gate" class="paper-note"></p><form id="two-final-form"><div id="final-questions"></div><button id="two-submit" class="paper-button" type="submit" disabled>提交最終推理</button></form><p id="two-final-feedback" role="status"></p></div>
+      </section>
+      <div class="document-footer"><span>青葉署 / 調查資料</span><span>CASE 002 ─ CONFIDENTIAL</span></div>
+    </div>
+  </main>
+  <main id="ending-screen" class="case-screen" hidden><div class="document"><p class="document-label">CASE 002 / 真相重建</p><h1 tabindex="-1" id="ending-heading">水聲停止之前</h1><div id="ending-story"></div><button id="close-case" class="paper-button" type="button">讀完這份檔案</button></div></main>
+  <main id="closed-screen" class="home-screen" hidden><div class="title-frame"><p class="file-label">CASE CLOSED</p><h1>水聲停止之前</h1><p class="english-title">CASE 002</p><p id="deduction-rank"></p><p id="rank-detail" class="header-note"></p><button class="return-button" type="button">返回案件選擇</button></div></main>
+
 </body>
 </html>

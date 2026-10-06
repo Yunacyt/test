@@ -119,3 +119,36 @@ legend { font-size: 13px; margin-bottom: 12px; color: #715f55; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* CASE 002 沿用原有紙張、酒紅與細線，只擴充必要的控制元件。 */
+.return-button { background: transparent; border: 1px solid #bca27b70; color: var(--cream); padding: 8px 16px; margin-bottom: 24px; }
+.return-button:hover { background: #61373e; border-color: var(--accent); }
+.case-selection { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 32px; }
+.case-choice { display: flex; flex-direction: column; gap: 14px; text-align: left; padding: 30px; background: #2d1921; border: 1px solid #bca27b70; color: var(--cream); }
+.case-choice strong { font-size: 26px; font-weight: 400; }
+.case-choice:hover { background: #43252e; border-color: var(--accent); transform: translateY(-3px); }
+.apartment-plan { padding: 18px; border: 1px solid #a08a7270; font-size: 14px; }
+.reasoning-block { border-top: 1px solid #a08a7270; padding-top: 24px; margin-top: 28px; }
+.compare-form { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: end; }
+.compare-form button { grid-column: 1 / -1; justify-self: start; }
+select { display: block; width: 100%; min-width: 0; max-width: 100%; background: #eadfc9; color: var(--ink); border: 1px solid #9c8870; padding: 12px 8px; font: inherit; font-size: 14px; margin-top: 8px; }
+select:focus-visible { outline: 2px solid var(--wine); outline-offset: 2px; }
+.final-question { display: block; margin-bottom: 22px; }
+.newly-available { border: 2px solid #866944; }
+.newly-available .paper-button { background: #706044; }
+.success-feedback { border-left: 3px solid #80663e; background: #80663e12; padding: 12px; animation: fade-in .3s ease both; }
+.struck-time { text-decoration: line-through; color: #796556; }
+.guide { font-size: 14px; margin-top: 18px; }
+.guide summary { cursor: pointer; color: var(--wine); }
+#ending-story { max-width: 750px; margin: 32px auto; }
+#ending-story p { margin-bottom: 28px; white-space: pre-line; line-height: 2.2; }
+#closed-screen .title-frame h1 { font-size: clamp(28px, 6vw, 52px); }
+#closed-screen { animation: quiet-close 1.3s ease both; }
+@keyframes quiet-close { from { opacity: 0; } to { opacity: 1; } }
+@media (max-width: 700px) {
+  .case-selection, .compare-form { grid-template-columns: 1fr; }
+  .compare-form label { min-width: 0; }
+  .case-choice { padding: 24px; }
+  .apartment-plan { padding: 12px; font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) { #closed-screen { animation: none; } }
