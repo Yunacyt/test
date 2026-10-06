@@ -153,27 +153,27 @@ document.querySelectorAll('.case-choice').forEach(button => {
 
 // CASE 002：四份人物問題、十二項證物。資料不會自動變成推論。
 const twoPeople = [
-  { id: 'chinatsu', name: '藤原千夏', relation: '28 歲／高中同學、多年好友', description: '19:45 來到 203，希望莉奈刪掉高中事件的相關資料，結束多年牽扯。', clue: '「我大約 20:30 就離開了，莉奈那時候還好好的。我只是來談一些以前的事。」' },
+  { id: 'chinatsu', name: '藤原千夏', relation: '28 歲／高中同學、多年好友', description: '與莉奈相識多年，案發當晚曾到 203 拜訪。', clue: '「我 19:45 到她家，大約 20:30 就離開了，莉奈那時候還好好的。我只是來談一些以前的事，希望她刪掉以前的資料。」' },
   { id: 'takumi', name: '相澤拓海', relation: '30 歲／隔壁 204 住戶', description: '曾以為莉奈也喜歡他。她會半夜找他聊天、請他幫忙、一起吃飯，還說過「如果是你這種人當男朋友好像也不錯」。', clue: '「20:55 我才回到 204。案發當晚我沒有進過莉奈家。」他提到莉奈時避開了視線。' },
   { id: 'maki', name: '小野寺真紀', relation: '43 歲／正下方 103 住戶', description: '安靜，與鄰居保持距離，不想捲入別人的事情。', clue: '「我跟她不熟。20:47 我看見千夏從昏黃走廊旁的金屬樓梯離開。21:12 到 21:15，我聽見樓上浴室的水聲；高橋小姐應該還活著，在洗澡吧。」追問後她確認：只聽見水，沒有看見莉奈。' },
   { id: 'ryo', name: '神谷遼', relation: '30 歲／交往三年的前男友', description: '他確實出軌，也曾威脅莉奈。警方告知死訊時，他冷淡地說：「……死了？那不是很好嗎。」', clue: '「我出軌，傷害過她，也說過『妳敢去找她，我不會放過妳』。我恨她，但沒有殺她。她很怕熱，泡澡只用約 38°C，40°C 以上她受不了。她回家第一件事就是洗澡。她干涉交友、看我的手機，總說是因為在乎我。她是怕有一天，所有人都發現其實根本不需要她。」' }
 ];
 const twoEvidence = [
-  { id: 'heater', name: '給湯器紀錄', description: '核對水聲的來源、模式與設定時間。', clue: '21:12 啟動的是「預約自動注水」，設定 42°C，運作至 21:15。這代表預約程序執行，不代表當時有人操作。面板可在離開前設定，未記錄操作者身份。' },
-  { id: 'habit', name: '回家時間與生活筆記', description: '房東的目擊與莉奈自己的日常紀錄。', clue: '房東約 18:30 看見莉奈回到 203。她的生活筆記寫著「回家先洗澡」，當晚 18:40 的訊息也寫著「洗好澡了」。她早已洗過澡。' },
+  { id: 'heater', name: '給湯器紀錄', description: '查看設備留下的使用資料。', clue: '21:12 啟動的是「預約自動注水」，設定 42°C，運作至 21:15。這代表預約程序執行，不代表當時有人操作。面板可在離開前設定，未記錄操作者身份。' },
+  { id: 'habit', name: '生活筆記與出入紀錄', description: '整理住戶日常紀錄與房東的目擊。', clue: '房東約 18:30 看見莉奈回到 203。她的生活筆記寫著「回家先洗澡」，當晚 18:40 的訊息也寫著「洗好澡了」。她早已洗過澡。' },
   { id: 'balcony', name: '203／204 陽台隔板', description: '查看房間後方的相鄰陽台。', clue: '隔板上有新鮮翻越擦痕，203 側留下鞋印，花盆灰塵中有與拓海鞋底相符的紋路。需再核對他取走的東西，不能只憑鞋印判定殺人。' },
-  { id: 'letter', name: '情書照片與空信封', description: '抽屜中的空信封，以及莉奈保留的聊天照片。', clue: '莉奈把拓海的認真情書拍給朋友看，嘲笑他真的以為兩人互相喜歡。今晚 21:02 拓海傳給莉奈的訊息是：「原件我拿回來了，別再給別人看。」抽屜只剩寫有拓海姓名的空信封。' },
-  { id: 'tea', name: '矮櫃下方茶漬', description: '檢查不容易擦到的地板縫隙。', clue: '矮櫃下的地板縫隙留著少量乾涸茶漬，與客廳茶壺的茶相符。浴室沒有同樣的茶漬。' },
-  { id: 'cup', name: '垃圾桶中的碎茶杯', description: '紙巾包裹的瓷片。', clue: '碎片上殘留茶漬，紙巾濕過後已乾。杯子是在客廳使用的，碎片像是事後收拾才丟進垃圾桶。' },
-  { id: 'clean', name: '客廳局部清潔痕跡', description: '查看矮櫃前地板與抹布。', clue: '矮櫃前局部地板比周圍乾淨，擦拭邊緣仍有茶痕。潮濕抹布藏在櫃邊。有人清理過這一小塊現場。' },
-  { id: 'phone2', name: '莉奈手機最後操作', description: '核對最後一次正常傳訊。', clue: '20:16 傳出的訊息：「等等再跟你說，千夏現在在我這。」之後沒有正常操作紀錄。單憑沒有操作，還不能斷言死亡時間。' },
-  { id: 'record', name: '秘密錄音', description: '核對 20:03 開始的錄音，不播放音效。', clue: '20:03 開始。20:05 後，千夏：「妳到底還要拿那件事威脅我多久？刪掉那些資料，別再聯絡我。」莉奈：「我從來沒有威脅妳。我只是提醒妳，別忘記以前發生過什麼。」後段有爭執聲、碰撞聲，約 20:20 中斷。沒有錄到完整過程，也沒有明確的殺人自白。' },
-  { id: 'cabinet', name: '客廳矮櫃邊角', description: '比對撞擊位置與初步檢驗。', clue: '邊角留有擦拭後的微量接觸痕跡。初步檢驗指出後腦撞擊，形狀與這個邊角一致；不像溺水或熱水直接致死。仍需結合茶杯、清潔痕跡與錄音判斷。' },
-  { id: 'bath', name: '浴室移動痕跡', description: '查看走道、浴室地面與預約面板。', clue: '客廳通往浴室的地面有拖移擦痕，浴室未見對應的撞擊現場。自動注水面板就在浴室入口旁，千夏離開前可接近並設定它；無法僅憑面板辨認是誰設定。' },
-  { id: 'archive', name: '高中事件封存資料', description: '取得秘密錄音後，可免費核對其提到的資料。', requires: 'record', free: true, clue: '莉奈保留的高中訊息、匿名帳號匯出紀錄與原始上傳郵件互相吻合：匿名散播同學私人資訊的人是莉奈。當年千夏因討厭那名同學，把難聽的話與私人資訊告訴莉奈；散播造成排擠，那名同學後來自殺。千夏以為抱怨被旁人聽到，背負罪惡感多年。莉奈既是散播者，又安慰千夏、替她「保守秘密」，用「如果大家知道最初是妳告訴我的，妳的人生會怎樣？」維持控制。' }
+  { id: 'letter', name: '抽屜與聊天照片', description: '檢查抽屜內的物品與相關照片。', clue: '莉奈把拓海的認真情書拍給朋友看，嘲笑他真的以為兩人互相喜歡。今晚 21:02 拓海傳給莉奈的訊息是：「原件我拿回來了，別再給別人看。」抽屜只剩寫有拓海姓名的空信封。' },
+  { id: 'tea', name: '矮櫃下方', description: '查看櫃子下方的地板縫隙。', clue: '矮櫃下的地板縫隙留著少量乾涸茶漬，與客廳茶壺的茶相符。浴室沒有同樣的茶漬。' },
+  { id: 'cup', name: '垃圾桶', description: '查看丟棄物品。', clue: '碎片上殘留茶漬，紙巾濕過後已乾。杯子是在客廳使用的，碎片像是事後收拾才丟進垃圾桶。' },
+  { id: 'clean', name: '客廳地板', description: '查看地板與周圍物品。', clue: '矮櫃前局部地板比周圍乾淨，擦拭邊緣仍有茶痕。潮濕抹布藏在櫃邊。有人清理過這一小塊現場。' },
+  { id: 'phone2', name: '莉奈的手機', description: '查看手機訊息與操作紀錄。', clue: '20:16 傳出的訊息：「等等再跟你說，千夏現在在我這。」之後沒有正常操作紀錄。單憑沒有操作，還不能斷言死亡時間。' },
+  { id: 'record', name: '手機音訊檔案', description: '整理手機中保存的音訊文字紀錄。', clue: '20:03 開始。20:05 後，千夏：「妳到底還要拿那件事威脅我多久？刪掉那些資料，別再聯絡我。」莉奈：「我從來沒有威脅妳。我只是提醒妳，別忘記以前發生過什麼。」後段有爭執聲、碰撞聲，約 20:20 中斷。沒有錄到完整過程，也沒有明確的殺人自白。' },
+  { id: 'cabinet', name: '客廳矮櫃', description: '檢查櫃子表面與周圍狀況。', clue: '邊角留有擦拭後的微量接觸痕跡。初步檢驗指出後腦撞擊，形狀與這個邊角一致；不像溺水或熱水直接致死。仍需結合茶杯、清潔痕跡與錄音判斷。' },
+  { id: 'bath', name: '浴室及走道', description: '查看浴室內外的設備與地面。', clue: '客廳通往浴室的地面有拖移擦痕，浴室未見對應的撞擊現場。自動注水面板就在浴室入口旁，進屋者可接近並設定它；無法僅憑面板辨認是誰設定。' },
+  { id: 'archive', name: '封存資料', description: '等待相關資料取得後，進一步核對。', requires: 'record', free: true, clue: '莉奈保留的高中訊息、匿名帳號匯出紀錄與原始上傳郵件互相吻合：匿名散播同學私人資訊的人是莉奈。當年千夏因討厭那名同學，把難聽的話與私人資訊告訴莉奈；散播造成排擠，那名同學後來自殺。千夏以為抱怨被旁人聽到，背負罪惡感多年。莉奈既是散播者，又安慰千夏、替她「保守秘密」，用「如果大家知道最初是妳告訴我的，妳的人生會怎樣？」維持控制。' }
 ];
 // 只有支線情書不是結案必要資料；行動耗盡時必要資料改為免費核對。
-const caseTwo = { points: 12, acquired: new Set(), deductions: new Set(), confronted: new Set(), paid: 0, attempts: 0, firstAccuracy: null, answers: {}, solved: false, closed: false, rank: '' };
+const caseTwo = { points: 12, acquired: new Set(), deductions: new Set(), confronted: new Set(), paid: 0, combinationMistakes: 0, attempts: 0, firstAccuracy: null, answers: {}, solved: false, closed: false, rank: '' };
 const deductions = [
   { id: 'temperature', pair: ['ryo', 'heater'], title: '不自然的水溫', text: '莉奈平常只用約 38°C，無法忍受 40°C 以上；42°C 不是她自然會選擇的泡澡設定。' },
   { id: 'waterWitness', pair: ['habit', 'maki'], title: '水聲與人的存在不同', text: '莉奈 18:30 回家後已洗澡。真紀只是聽見水，沒有看見她本人；水聲並不是目擊生存。' },
@@ -183,12 +183,12 @@ const deductions = [
   { id: 'scene', pair: ['cleanup', 'cabinet'], title: '真正的撞擊地點：203 客廳', text: '矮櫃與傷勢相符，周圍又有爭執後的破杯與清理痕跡。真正的撞擊應在客廳，而非浴室。' },
   { id: 'interruption', pair: ['phone2', 'record'], title: '20:16 後的爭執與中斷', text: '20:16 莉奈仍正常傳訊，錄音於約 20:20 在爭執與碰撞後中斷。這能縮小時段，但錄音本身沒有完整記錄死因。' },
   { id: 'incident', pair: ['interruption', 'scene'], title: '客廳事故與失去活動的時段', text: '手機、錄音與現場相互支持：20:16 之後客廳發生撞擊，隨後有人清理。需要離開目擊作為上界。' },
-  { id: 'reconstructed', pair: ['incident', 'maki'], requires: 'timeConflict', title: '真正可能的死亡時間：20:16–20:47', text: 'TIMELINE RECONSTRUCTED／20:16 最後正常操作至千夏 20:47 離開。拓海約 21:00 才進屋，已晚於重建時段。這是可能區間，不是精確死亡分鐘。', reward: true },
+  { id: 'reconstructed', pair: ['incident', 'maki'], requires: 'timeConflict', title: '真正可能的死亡時間：20:16–20:47', text: 'TIMELINE RECONSTRUCTED／20:16 最後正常操作至千夏 20:47 離開。這是可能區間，不是精確死亡分鐘。', reward: true },
   { id: 'staging', pair: ['bath', 'heater'], requires: 'reconstructed', title: '搬動遺體與延後時間的偽裝', text: '客廳撞擊、浴室移動痕跡與預約注水互相對照。莉奈被移到浴室後，預約水聲讓旁人誤以為她仍在準備洗澡。' }
 ];
 const confrontationText = {
-  takumi: 'CONTRADICTION DETECTED／拓海低下頭：「她把我的情書拍給朋友，笑我。我 20:55 回到 204，約 21:00 翻過隔板，只想拿回原件。我找完抽屜就走，沒有進浴室，也不知道她死了。」他確實入屋且說謊，但動機是羞恥。若已完成時間線及浴室痕跡比對，就能核對他進屋時莉奈已被移到浴室；不能僅憑這段自述排除嫌疑。說謊 ≠ 犯人。',
-  chinatsu: 'CONTRADICTION DETECTED／真紀親眼目擊的是 20:47，不是 20:30。千夏改口：「我……後來又留了一會兒。」手機與錄音證明她在爭執時仍在場，重建時段涵蓋她停留的時間；她能在離開前接近浴室面板。這些資料須相互核對，不能只憑說謊就定罪。'
+  takumi: 'CONTRADICTION DETECTED／拓海低下頭：「她把我的情書拍給朋友，笑我。我 20:55 回到 204，約 21:00 翻過隔板，只想拿回原件。我找完抽屜就走，沒有進浴室，也不知道她死了。」他確實入屋且說謊，但動機是羞恥。不能僅憑這段自述排除嫌疑，還需要核對其他紀錄。',
+  chinatsu: 'CONTRADICTION DETECTED／真紀親眼目擊的是 20:47，不是 20:30。千夏改口：「我……後來又留了一會兒。」手機與錄音證明她在爭執時仍在場，重建時段涵蓋她停留的時間；這些資料須相互核對，不能只憑說謊就定罪。'
 };
 const finalQuestions = [
   { id: 'culprit', label: '1. 犯人是誰？', options: [['chinatsu','藤原千夏'],['takumi','相澤拓海'],['maki','小野寺真紀'],['ryo','神谷遼']], answer: 'chinatsu' },
@@ -202,7 +202,22 @@ document.getElementById('two-people-list').innerHTML = twoPeople.map(person => `
   <details class="investigation-card person-card"><summary><span class="person-name">${person.name}</span><span class="relation">${person.relation}</span><span class="expand-hint">查看紀錄 ＋</span></summary><div class="person-details"><p>${person.description}</p><button type="button" class="paper-button two-investigate" data-id="${person.id}"></button><p id="two-clue-${person.id}" class="clue" hidden></p></div></details>`).join('');
 document.getElementById('two-evidence-list').innerHTML = twoEvidence.map(item => `
   <article class="investigation-card evidence-card"><h3>${item.name}</h3><p>${item.description}</p><button type="button" class="paper-button two-investigate" data-id="${item.id}"></button><p id="two-clue-${item.id}" class="clue" hidden></p></article>`).join('');
-document.getElementById('final-questions').innerHTML = finalQuestions.map(q => `<label class="final-question">${q.label}<select name="${q.id}" required><option value="">請選擇</option>${q.options.map(([value,text]) => `<option value="${value}">${text}</option>`).join('')}</select></label>`).join('');
+// 題目在達到門檻後才建立，未開放時不把答案選項放進網頁。
+function revealFinalQuestions() {
+  const form = document.getElementById('two-final-form');
+  const ready = finalReady();
+  form.hidden = !ready;
+  const container = document.getElementById('final-questions');
+  if (ready && !container.children.length) {
+    container.innerHTML = finalQuestions.map(q => `<label class="final-question">${q.label}<select name="${q.id}" required><option value="">請選擇</option>${q.options.map(([value,text]) => `<option value="${value}">${text}</option>`).join('')}</select></label>`).join('');
+  } else if (!ready) {
+    container.replaceChildren();
+  }
+  document.getElementById('final-gate').textContent = ready
+    ? 'FINAL DEDUCTION UNLOCKED／最終推理已開放'
+    : '最終推理尚未開放／目前資訊不足';
+  document.getElementById('two-submit').disabled = !ready;
+}
 
 function twoItem(id) { return [...twoPeople, ...twoEvidence].find(item => item.id === id); }
 function available(id) { return caseTwo.acquired.has(id) || caseTwo.deductions.has(id); }
@@ -242,13 +257,13 @@ function updateTwo() {
   document.getElementById('two-points').textContent = caseTwo.points;
   document.getElementById('two-action-message').textContent = caseTwo.points === 0
     ? '行動力已耗盡：必要資料開放免費補充核對。組合、對質與最終推理仍可操作。'
-    : '調查消耗 1 點；組合與對質免費。兩項關鍵時間推論各返還 1 點，必要資料在零點時免費核對。';
+    : '調查消耗 1 點；組合與對質免費。關鍵推論首次成功返還 1 點，必要資料在零點時免費核對。';
   document.querySelectorAll('.two-investigate').forEach(button => {
     const item = twoItem(button.dataset.id);
     const done = caseTwo.acquired.has(item.id);
     const locked = item.requires && !available(item.requires);
     button.disabled = done || locked || (caseTwo.points === 0 && !isFree(item));
-    button.textContent = done ? (twoPeople.includes(item) ? '已詢問' : '已調查') : locked ? '尚未解鎖：先取得秘密錄音' : isFree(item) ? '新解鎖／免費核對' : caseTwo.points === 0 ? '行動力不足（支線）' : (twoPeople.includes(item) ? '詢問 · 1 行動力' : '調查 · 1 行動力');
+    button.textContent = done ? (twoPeople.includes(item) ? '已詢問' : '已調查') : locked ? '尚未解鎖' : isFree(item) ? '免費核對' : caseTwo.points === 0 ? '行動力不足' : (twoPeople.includes(item) ? '詢問 · 1 行動力' : '調查 · 1 行動力');
     button.closest('.investigation-card').classList.toggle('investigated',done);
     button.closest('.investigation-card').classList.toggle('newly-available',!done && !locked && isFree(item));
   });
@@ -265,12 +280,52 @@ function updateTwo() {
   const rebuilt = caseTwo.deductions.has('reconstructed');
   document.getElementById('initial-time').classList.toggle('struck-time',conflict);
   document.getElementById('current-time').textContent = rebuilt ? '20:16–20:47' : conflict ? 'UNKNOWN' : '';
-  document.getElementById('timeline-log').textContent = rebuilt
-    ? 'TIMELINE RECONSTRUCTED／18:30 回家並洗澡 → 19:45 千夏到訪 → 20:03 錄音 → 20:16 最後正常操作 → 約 20:20 碰撞與中斷 → 20:47 千夏離開 → 20:55 拓海回家 → 約 21:00 取信（對質後確認）→ 21:12 自動注水 → 約 22:05 發現遺體。可能死亡區間：20:16–20:47。'
-    : conflict ? 'TIMELINE CONTRADICTION／水聲不是生存證明。推定死亡時間：UNKNOWN。下一步核對客廳、手機、錄音與離開目擊。' : '暫定：21:12 水聲 → 莉奈仍活著？這仍是推測。';
-  document.getElementById('final-gate').textContent = finalReady() ? '核心資料已核對，可以回答五題。拓海對質仍可補查；說謊並不等於犯人。'
-    : '提交前請推翻水聲時間、重建客廳死亡時段、比對浴室與給湯器、對質千夏，並免費核對已解鎖的高中資料。';
-  document.getElementById('two-submit').disabled = !finalReady();
+  const timeline = document.getElementById('timeline-log');
+  if (rebuilt) {
+    // 重建成功也只顯示已取得的時刻，拓海入屋要等對質承認後才寫入。
+    const events = [];
+    if (caseTwo.acquired.has('habit')) events.push('18:30 回家並洗澡');
+    if (caseTwo.acquired.has('chinatsu')) events.push('19:45 千夏到訪（自述）');
+    if (caseTwo.acquired.has('record')) events.push('20:03 錄音開始', '約 20:20 爭執聲、碰撞聲與錄音中斷');
+    if (caseTwo.acquired.has('phone2')) events.push('20:16 最後正常操作');
+    if (caseTwo.acquired.has('maki')) events.push('20:47 千夏離開');
+    if (caseTwo.acquired.has('takumi')) events.push('20:55 拓海回家（自述）');
+    if (caseTwo.confronted.has('takumi')) events.push('約 21:00 拓海取信（對質證詞）');
+    if (caseTwo.acquired.has('heater')) events.push('21:12 自動注水');
+    events.push('約 22:05 發現遺體');
+    events.sort((a, b) => a.match(/\d{2}:\d{2}/)[0].localeCompare(b.match(/\d{2}:\d{2}/)[0]));
+    timeline.textContent = `TIMELINE RECONSTRUCTED／${events.join(' → ')}。可能死亡區間：20:16–20:47。`;
+  } else {
+    timeline.textContent = conflict
+      ? 'TIMELINE CONTRADICTION／原推定死亡時間已撤回。推定死亡時間：UNKNOWN。'
+      : '警方紀錄：21:12 熱水使用紀錄與樓下水聲證詞，推定死亡時間 21:12–22:05。';
+  }
+  if (caseTwo.confronted.has('takumi') && caseTwo.deductions.has('staging')) {
+    const note = document.createElement('p');
+    note.className = 'paper-note';
+    note.textContent = '核對結果／拓海約 21:00 入屋，晚於重建的死亡時段。客廳與浴室痕跡比對支持莉奈當時已被移到浴室。說謊 ≠ 犯人。';
+    document.getElementById('confrontations').append(note);
+  }
+  updateCombinationHint();
+  revealFinalQuestions();
+}
+
+// 連續三次失敗後才提供可選提示；成功後重置。提示不列出配對答案。
+function updateCombinationHint() {
+  const hint = document.getElementById('combination-hint');
+  hint.hidden = caseTwo.combinationMistakes < 3;
+  if (hint.hidden) hint.open = false;
+  document.getElementById('combination-hint-text').textContent =
+    caseTwo.acquired.has('ryo') && caseTwo.acquired.has('heater') && !caseTwo.deductions.has('temperature')
+      ? '比較死者平常的生活習慣與當晚設備紀錄。'
+      : '比較已取得的紀錄與證詞，留意它們的描述是否一致。';
+}
+function failedCombination(message) {
+  caseTwo.combinationMistakes += 1;
+  const output = document.getElementById('combine-feedback');
+  output.className = '';
+  output.textContent = message;
+  updateCombinationHint();
 }
 
 document.getElementById('combine-form').addEventListener('submit', event => {
@@ -280,9 +335,10 @@ document.getElementById('combine-form').addEventListener('submit', event => {
   const output = document.getElementById('combine-feedback');
   if (!available(a) || !available(b)) return;
   const rule = deductions.find(d => d.pair.includes(a) && d.pair.includes(b) && a !== b);
-  if (!rule) { output.textContent = '這兩項資訊目前無法形成有效推論。'; return; }
-  if (rule.requires && !available(rule.requires)) { output.textContent = '先核對水聲時間矛盾，或重建死亡時段，再比對這兩項資料。'; return; }
-  if (caseTwo.deductions.has(rule.id)) { output.textContent = '這份推論已記錄，不會重複返還行動力。'; return; }
+  if (!rule) { failedCombination('這兩項資訊目前無法形成有效推論。'); return; }
+  if (rule.requires && !available(rule.requires)) { failedCombination('目前資料不足以形成這份推論，請繼續整理已取得的資訊。'); return; }
+  if (caseTwo.deductions.has(rule.id)) { caseTwo.combinationMistakes = 0; updateCombinationHint(); output.className = ''; output.textContent = '這份推論已記錄，不會重複返還行動力。'; return; }
+  caseTwo.combinationMistakes = 0;
   caseTwo.deductions.add(rule.id);
   if (rule.reward) caseTwo.points = Math.min(12, caseTwo.points + 1);
   output.textContent = `推論成立：${rule.title}${rule.reward ? '／返還 1 點行動力' : ''}`;
@@ -297,11 +353,11 @@ document.getElementById('confront-form').addEventListener('submit', event => {
   if (!caseTwo.acquired.has(person) || !available(proof)) return;
   if (caseTwo.confronted.has(person)) { output.textContent = '已完成這段對質，新證詞保留在下方。'; return; }
   if (person === 'takumi' && proof === 'balcony' && !caseTwo.acquired.has('letter')) {
-    output.textContent = '陽台痕跡仍需佐證。請核對情書照片、空信封與取回原件的訊息。'; return;
+    output.textContent = '這份資料尚不足以反駁，請繼續蒐集佐證。'; return;
   }
   const correct = person === 'takumi' ? proof === 'balcony' && caseTwo.acquired.has('letter')
     : person === 'chinatsu' && proof === 'maki' && available('reconstructed');
-  if (!correct) { output.textContent = '這份資料尚不足以反駁。拓海需陽台及取信佐證；千夏需離開目擊與已重建的時間線。'; return; }
+  if (!correct) { output.textContent = '這份資料尚不足以反駁，請繼續蒐集佐證。'; return; }
   caseTwo.confronted.add(person);
   output.textContent = 'CONTRADICTION DETECTED／新證詞已免費解鎖。';
   output.className = 'success-feedback';
