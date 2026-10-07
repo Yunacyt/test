@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>靜夜檔案｜MIDNIGHT ARCHIVES</title>
-  <link rel="stylesheet" href="style.css?v=3">
-  <script src="script.js?v=3" defer></script>
+  <link rel="stylesheet" href="style.css?v=4">
+  <script src="script.js?v=4" defer></script>
 </head>
 <body>
   <main id="home-screen" class="home-screen">
@@ -118,13 +118,17 @@
     <div class="document">
       <section id="two-overview" class="two-panel section-panel">
         <p class="document-label">FILE 01 / INCIDENT REPORT</p><h2>203號室，無人應答。</h2>
-        <p>9月24日晚間22:05，夕凪公寓管理人依約前往203號室檢查浴室漏水問題。</p>
-        <p>多次敲門及撥打電話皆無人回應後，管理人以備用鑰匙進入屋內，並在浴室發現住戶高橋莉奈倒地。</p>
-        <p>救護人員抵達時，莉奈已無生命跡象。</p>
+        <div class="text-blocks">
+        <p class="paragraph">9月24日晚間22:05，夕凪公寓管理人依約前往203號室檢查浴室漏水問題。</p>
+        <p class="paragraph">多次敲門及撥打電話皆無人回應後，管理人以備用鑰匙進入屋內，並在浴室發現住戶高橋莉奈倒地。</p>
+        <p class="paragraph">救護人員抵達時，莉奈已無生命跡象。</p>
+        </div>
         <dl class="case-facts"><div><dt>地點</dt><dd>夕凪公寓203號室</dd></div><div><dt>發現時間</dt><dd>9月24日22:05</dd></div><div><dt>死亡時間</dt><dd><span id="initial-time">21:12～22:05</span><strong id="current-time"></strong></dd></div></dl>
         <h3>初步判斷</h3>
-        <p>死者後腦受到強烈撞擊，死因初步判定為顱內出血。</p>
-        <p>根據樓下住戶證詞，約21:12至21:15曾聽見203號室浴室傳出水聲，因此警方初步推定死亡時間約為21:12至22:05之間。</p>
+        <div class="text-blocks">
+        <p class="paragraph">死者後腦受到強烈撞擊，死因初步判定為顱內出血。</p>
+        <p class="paragraph">根據樓下住戶證詞，約21:12至21:15曾聽見203號室浴室傳出水聲，因此警方初步推定死亡時間約為21:12至22:05之間。</p>
+        </div>
       </section>
       <section id="two-people" class="two-panel section-panel" hidden><p class="document-label">FILE 02 / TESTIMONIES</p><h2>人物紀錄</h2><div id="two-people-list" class="card-grid"></div></section>
       <section id="two-evidence" class="two-panel section-panel" hidden><p class="document-label">FILE 03 / EVIDENCE REGISTER</p><h2>現場紀錄</h2><div id="two-evidence-list" class="card-grid"></div></section>
@@ -133,7 +137,7 @@
         <div id="two-notes"></div>
         <p id="timeline-announcement" class="timeline-announcement" role="status" hidden></p>
         <section class="reasoning-block" aria-label="最終推理">
-          <p id="final-gate" class="paper-note">FINAL DEDUCTION<br>最終推理尚未開放。<br>目前掌握的資訊不足以重建案件全貌。</p>
+          <div id="final-gate" class="paper-note text-blocks"><p class="paragraph">FINAL DEDUCTION</p><p class="paragraph">最終推理尚未開放。</p><p class="paragraph">目前掌握的資訊不足以重建案件全貌。</p></div>
           <div id="two-final-content"></div>
         </section>
       </section>

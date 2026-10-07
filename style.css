@@ -136,7 +136,6 @@ select:focus-visible { outline: 2px solid var(--wine); outline-offset: 2px; }
 .newly-available .paper-button { background: #706044; }
 .struck-time { text-decoration: line-through; color: #796556; }
 #ending-story { max-width: 750px; margin: 32px auto; }
-#ending-story p { margin-bottom: 28px; white-space: pre-line; line-height: 2.2; }
 #closed-screen .title-frame h1 { font-size: clamp(28px, 6vw, 52px); }
 #closed-screen { animation: quiet-close 1.3s ease both; }
 @keyframes quiet-close { from { opacity: 0; } to { opacity: 1; } }
@@ -148,7 +147,6 @@ select:focus-visible { outline: 2px solid var(--wine); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { #closed-screen { animation: none; } }
 
 /* 調查筆記沿用檔案紙張；新紀錄只在條件達成後建立。 */
-#case-two-screen .clue, #final-gate, .note-record { white-space: pre-line; }
 #current-time { display: block; }
 .followup { border-top: 1px solid #a08a725c; padding: 18px 0 4px; margin-top: 22px; }
 .followup.newly-available { border: 0; border-top: 1px solid #a08a725c; }
@@ -181,3 +179,33 @@ select:focus-visible { outline: 2px solid var(--wine); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) {
   .timeline-announcement, .unlocked-gate { animation: none; }
 }
+
+/* CASE 002 統一閱讀排版：段落之間有 gap，段內資料行沒有 gap。 */
+#case-two-screen, #ending-screen {
+  --paragraph-gap: .875rem;
+  --reading-line-height: 1.9;
+  --field-gap: 1.25rem;
+}
+.text-blocks {
+  display: grid;
+  gap: var(--paragraph-gap);
+}
+#case-two-screen .paragraph, #ending-screen .paragraph {
+  margin: 0;
+  line-height: var(--reading-line-height);
+  white-space: normal;
+}
+.evidence-lines .text-line {
+  display: block;
+  line-height: inherit;
+}
+#case-two-screen .person-description { margin-bottom: var(--paragraph-gap); }
+#case-two-screen .note-sheet form, #two-final-form {
+  display: grid;
+  gap: var(--field-gap);
+}
+#case-two-screen .note-sheet fieldset, #case-two-screen .final-question { margin: 0; }
+#case-two-screen .note-sheet form > button, #two-final-form > button { justify-self: start; }
+#case-two-screen .note-feedback { margin-top: var(--paragraph-gap); }
+#case-two-screen #two-final-feedback { margin-top: var(--paragraph-gap); }
+#case-two-screen #two-final-feedback:empty { display: none; }
