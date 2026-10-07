@@ -151,260 +151,399 @@ document.querySelectorAll('.case-choice').forEach(button => {
   });
 });
 
-// CASE 002：四份人物問題、十二項證物。資料不會自動變成推論。
+// CASE 002：初次紀錄、免費追加詢問與推理節點分開保存。
 const twoPeople = [
-  { id: 'chinatsu', name: '藤原千夏', relation: '28 歲／高中同學、多年好友', description: '與莉奈相識多年，案發當晚曾到 203 拜訪。', clue: '「我 19:45 到她家，大約 20:30 就離開了，莉奈那時候還好好的。我只是來談一些以前的事，希望她刪掉以前的資料。」' },
-  { id: 'takumi', name: '相澤拓海', relation: '30 歲／隔壁 204 住戶', description: '曾以為莉奈也喜歡他。她會半夜找他聊天、請他幫忙、一起吃飯，還說過「如果是你這種人當男朋友好像也不錯」。', clue: '「20:55 我才回到 204。案發當晚我沒有進過莉奈家。」他提到莉奈時避開了視線。' },
-  { id: 'maki', name: '小野寺真紀', relation: '43 歲／正下方 103 住戶', description: '安靜，與鄰居保持距離，不想捲入別人的事情。', clue: '「我跟她不熟。20:47 我看見千夏從昏黃走廊旁的金屬樓梯離開。21:12 到 21:15，我聽見樓上浴室的水聲；高橋小姐應該還活著，在洗澡吧。」追問後她確認：只聽見水，沒有看見莉奈。' },
-  { id: 'ryo', name: '神谷遼', relation: '30 歲／交往三年的前男友', description: '他確實出軌，也曾威脅莉奈。警方告知死訊時，他冷淡地說：「……死了？那不是很好嗎。」', clue: '「我出軌，傷害過她，也說過『妳敢去找她，我不會放過妳』。我恨她，但沒有殺她。她很怕熱，泡澡只用約 38°C，40°C 以上她受不了。她回家第一件事就是洗澡。她干涉交友、看我的手機，總說是因為在乎我。她是怕有一天，所有人都發現其實根本不需要她。」' }
+  {
+    id: 'chinatsu', name: '藤原千夏', age: 28, relation: '高中同學／多年好友',
+    description: '與莉奈自高中時期相識，兩人多年來一直保持聯絡。案發當晚19:45左右前往203號室拜訪莉奈。',
+    clue: '「那天只是去找莉奈聊聊天。我們認識很久了，偶爾會像以前一樣聊些高中時候的事情。」\n\n「我大概八點半左右就離開了，沒有特別看時間。她那時候還好好的，也沒有什麼不對勁。」\n\n「後來發生這種事……我真的沒想到。」'
+  },
+  {
+    id: 'takumi', name: '相澤拓海', age: 30, relation: '204號室住戶',
+    description: '莉奈的隔壁鄰居。兩人平時關係不錯，偶爾會一起吃飯，也會互相幫忙。',
+    clue: '「我大概20:55左右回到公寓。」\n\n「那天晚上，我沒有見到高橋小姐。」\n\n「後來警察來了，我才知道出事。」'
+  },
+  {
+    id: 'maki', name: '小野寺真紀', age: 43, relation: '103號室住戶',
+    description: '居住於203正下方的103號室。與莉奈偶爾在走廊碰面，平時沒有太多往來。',
+    clue: '「九點多吧，我聽到樓上浴室有水聲。」\n\n「這棟公寓隔音不好，樓上放水的聲音其實滿明顯的。」\n\n「所以我以為高橋小姐那時候正在洗澡。」\n\n「我跟她不算熟，平常就是碰到會打招呼而已。」'
+  },
+  {
+    id: 'ryo', name: '神谷遼', age: 30, relation: '前男友',
+    description: '曾與莉奈交往約三年。兩人因遼與其他女性交往而分手，之後關係惡化。',
+    clue: '「對，我出軌了。」\n\n「她發現之後，我們就分手了。」\n\n「我知道你們找到那則訊息。『妳敢去找她，我不會放過妳』是我傳的。」\n\n「我那時候很怕她去找那個女生。那句話是我說的，我不否認。」\n\n「但我沒有殺她。」'
+  }
 ];
 const twoEvidence = [
-  { id: 'heater', name: '給湯器紀錄', description: '查看設備留下的使用資料。', clue: '21:12 啟動的是「預約自動注水」，設定 42°C，運作至 21:15。這代表預約程序執行，不代表當時有人操作。面板可在離開前設定，未記錄操作者身份。' },
-  { id: 'habit', name: '生活筆記與出入紀錄', description: '整理住戶日常紀錄與房東的目擊。', clue: '房東約 18:30 看見莉奈回到 203。她的生活筆記寫著「回家先洗澡」，當晚 18:40 的訊息也寫著「洗好澡了」。她早已洗過澡。' },
-  { id: 'balcony', name: '203／204 陽台隔板', description: '查看房間後方的相鄰陽台。', clue: '隔板上有新鮮翻越擦痕，203 側留下鞋印，花盆灰塵中有與拓海鞋底相符的紋路。需再核對他取走的東西，不能只憑鞋印判定殺人。' },
-  { id: 'letter', name: '抽屜與聊天照片', description: '檢查抽屜內的物品與相關照片。', clue: '莉奈把拓海的認真情書拍給朋友看，嘲笑他真的以為兩人互相喜歡。今晚 21:02 拓海傳給莉奈的訊息是：「原件我拿回來了，別再給別人看。」抽屜只剩寫有拓海姓名的空信封。' },
-  { id: 'tea', name: '矮櫃下方', description: '查看櫃子下方的地板縫隙。', clue: '矮櫃下的地板縫隙留著少量乾涸茶漬，與客廳茶壺的茶相符。浴室沒有同樣的茶漬。' },
-  { id: 'cup', name: '垃圾桶', description: '查看丟棄物品。', clue: '碎片上殘留茶漬，紙巾濕過後已乾。杯子是在客廳使用的，碎片像是事後收拾才丟進垃圾桶。' },
-  { id: 'clean', name: '客廳地板', description: '查看地板與周圍物品。', clue: '矮櫃前局部地板比周圍乾淨，擦拭邊緣仍有茶痕。潮濕抹布藏在櫃邊。有人清理過這一小塊現場。' },
-  { id: 'phone2', name: '莉奈的手機', description: '查看手機訊息與操作紀錄。', clue: '20:16 傳出的訊息：「等等再跟你說，千夏現在在我這。」之後沒有正常操作紀錄。單憑沒有操作，還不能斷言死亡時間。' },
-  { id: 'record', name: '手機音訊檔案', description: '整理手機中保存的音訊文字紀錄。', clue: '20:03 開始。20:05 後，千夏：「妳到底還要拿那件事威脅我多久？刪掉那些資料，別再聯絡我。」莉奈：「我從來沒有威脅妳。我只是提醒妳，別忘記以前發生過什麼。」後段有爭執聲、碰撞聲，約 20:20 中斷。沒有錄到完整過程，也沒有明確的殺人自白。' },
-  { id: 'cabinet', name: '客廳矮櫃', description: '檢查櫃子表面與周圍狀況。', clue: '邊角留有擦拭後的微量接觸痕跡。初步檢驗指出後腦撞擊，形狀與這個邊角一致；不像溺水或熱水直接致死。仍需結合茶杯、清潔痕跡與錄音判斷。' },
-  { id: 'bath', name: '浴室及走道', description: '查看浴室內外的設備與地面。', clue: '客廳通往浴室的地面有拖移擦痕，浴室未見對應的撞擊現場。自動注水面板就在浴室入口旁，進屋者可接近並設定它；無法僅憑面板辨認是誰設定。' },
-  { id: 'archive', name: '封存資料', description: '等待相關資料取得後，進一步核對。', requires: 'record', free: true, clue: '莉奈保留的高中訊息、匿名帳號匯出紀錄與原始上傳郵件互相吻合：匿名散播同學私人資訊的人是莉奈。當年千夏因討厭那名同學，把難聽的話與私人資訊告訴莉奈；散播造成排擠，那名同學後來自殺。千夏以為抱怨被旁人聽到，背負罪惡感多年。莉奈既是散播者，又安慰千夏、替她「保守秘密」，用「如果大家知道最初是妳告訴我的，妳的人生會怎樣？」維持控制。' }
+  { id: 'heater', name: '給湯器使用紀錄', tags: ['scheduledWater', 'water42'], clue: '21:12　預約自動注水\n設定水溫：42°C\n注水結束：21:15' },
+  { id: 'entry', name: '莉奈的出入紀錄', clue: '公寓入口監視器拍到莉奈於18:37返回公寓。此後直到遺體被發現，沒有再次拍到她離開。' },
+  { id: 'balcony', name: '203陽台地面', clue: '203號室陽台地面積有一層薄灰，其中留有較新的鞋印。鞋底紋路與相澤拓海當晚所穿鞋款一致。' },
+  { id: 'letter', name: '莉奈抽屜內的信封', clue: '莉奈臥室的書桌抽屜中找到一只信封。\n\n收件人為『莉奈』，署名『拓海』，封面角落畫有小小的愛心。\n\n信封內沒有信件。' },
+  { id: 'tea', name: '矮櫃下方的茶漬', tags: ['spilledTea'], clue: '客廳矮櫃下方留有少量已乾涸的茶漬。位置較深，表面清潔時不易注意。' },
+  { id: 'cup', name: '垃圾桶內的碎杯', tags: ['spilledTea'], clue: '垃圾桶內找到數片破裂的瓷杯碎片，以紙巾包裹。\n\n杯片及紙巾上均殘留已乾涸的茶漬。' },
+  { id: 'clean', name: '客廳地板', tags: ['wipedFloor'], clue: '客廳中央部分地板明顯比周圍乾淨，擦拭方向不規則。附近家具底部仍可見少量未清除的污漬。' },
+  { id: 'phone2', name: '莉奈的手機', clue: '20:16，莉奈傳出最後一則訊息：\n\n『等等再跟你說，千夏現在在我這。』\n\n此後沒有任何發出的訊息紀錄。' },
+  { id: 'record', name: '手機音訊檔案', clue: '手機中找到一段於20:03開始的錄音。\n\n千夏：『妳到底還要拿那件事威脅我多久？』\n\n莉奈：『我從來沒有威脅妳。』\n\n莉奈：『我只是提醒妳，別忘記以前發生過什麼。』\n\n千夏：『我已經受夠了。』\n\n錄音於20:20結束。' },
+  { id: 'cabinet', name: '客廳矮櫃', tags: ['victimBlood'], clue: '矮櫃右側邊角有明顯擦拭痕跡。木質接縫中仍殘留少量暗褐色痕跡。\n\n經檢驗確認為高橋莉奈的血液。' },
+  { id: 'bath', name: '浴室與走道', clue: '客廳通往浴室的地面可見數道不連續的拖擦痕跡。' }
 ];
-// 只有支線情書不是結案必要資料；行動耗盡時必要資料改為免費核對。
-const caseTwo = { points: 12, acquired: new Set(), deductions: new Set(), confronted: new Set(), paid: 0, combinationMistakes: 0, attempts: 0, firstAccuracy: null, answers: {}, solved: false, closed: false, rank: '' };
-const deductions = [
-  { id: 'temperature', pair: ['ryo', 'heater'], title: '不自然的水溫', text: '莉奈平常只用約 38°C，無法忍受 40°C 以上；42°C 不是她自然會選擇的泡澡設定。' },
-  { id: 'waterWitness', pair: ['habit', 'maki'], title: '水聲與人的存在不同', text: '莉奈 18:30 回家後已洗澡。真紀只是聽見水，沒有看見她本人；水聲並不是目擊生存。' },
-  { id: 'timeConflict', pair: ['temperature', 'waterWitness'], title: '21:12 的水聲不能證明莉奈仍活著', text: 'TIMELINE CONTRADICTION／21:12 那缸水，不是為莉奈準備的。自動注水可預先設定，原推定 21:12–22:05 不再成立。', reward: true },
-  { id: 'spill', pair: ['tea', 'cup'], title: '客廳裡破碎的茶杯', text: '地板縫的茶與包好的碎杯相互對照，客廳曾發生茶杯碎裂與茶水灑落。' },
-  { id: 'cleanup', pair: ['spill', 'clean'], title: '有人清理客廳', text: '碎杯被收起、地板局部被擦拭，殘留痕跡顯示事後整理而非原本整潔。' },
-  { id: 'scene', pair: ['cleanup', 'cabinet'], title: '真正的撞擊地點：203 客廳', text: '矮櫃與傷勢相符，周圍又有爭執後的破杯與清理痕跡。真正的撞擊應在客廳，而非浴室。' },
-  { id: 'interruption', pair: ['phone2', 'record'], title: '20:16 後的爭執與中斷', text: '20:16 莉奈仍正常傳訊，錄音於約 20:20 在爭執與碰撞後中斷。這能縮小時段，但錄音本身沒有完整記錄死因。' },
-  { id: 'incident', pair: ['interruption', 'scene'], title: '客廳事故與失去活動的時段', text: '手機、錄音與現場相互支持：20:16 之後客廳發生撞擊，隨後有人清理。需要離開目擊作為上界。' },
-  { id: 'reconstructed', pair: ['incident', 'maki'], requires: 'timeConflict', title: '真正可能的死亡時間：20:16–20:47', text: 'TIMELINE RECONSTRUCTED／20:16 最後正常操作至千夏 20:47 離開。這是可能區間，不是精確死亡分鐘。', reward: true },
-  { id: 'staging', pair: ['bath', 'heater'], requires: 'reconstructed', title: '搬動遺體與延後時間的偽裝', text: '客廳撞擊、浴室移動痕跡與預約注水互相對照。莉奈被移到浴室後，預約水聲讓旁人誤以為她仍在準備洗澡。' }
-];
-const confrontationText = {
-  takumi: 'CONTRADICTION DETECTED／拓海低下頭：「她把我的情書拍給朋友，笑我。我 20:55 回到 204，約 21:00 翻過隔板，只想拿回原件。我找完抽屜就走，沒有進浴室，也不知道她死了。」他確實入屋且說謊，但動機是羞恥。不能僅憑這段自述排除嫌疑，還需要核對其他紀錄。',
-  chinatsu: 'CONTRADICTION DETECTED／真紀親眼目擊的是 20:47，不是 20:30。千夏改口：「我……後來又留了一會兒。」手機與錄音證明她在爭執時仍在場，重建時段涵蓋她停留的時間；這些資料須相互核對，不能只憑說謊就定罪。'
+const CASE_TWO_AP = 13;
+const caseTwo = {
+  points: CASE_TWO_AP, acquired: new Set(), followups: new Set(), nodes: new Set(),
+  rewards: new Set(), paid: 0, answers: {}, attempts: 0, firstAccuracy: null,
+  solved: false, closed: false, truthStage: 'crime'
 };
+const hasTwo = id => caseTwo.acquired.has(id) || caseTwo.followups.has(id);
+const allTwo = ids => ids.every(hasTwo);
+const twoFollowups = [
+  {
+    id: 'chinatsuAudio', owner: 'chinatsu', title: '那天談了什麼？',
+    unlocked: () => allTwo(['chinatsu', 'record']),
+    clue: '「……我們確實吵架了。」\n\n「是以前的一些事情。我不想說得太詳細。」\n\n「我那時候很生氣，所以說了很難聽的話。但我們沒有動手。」\n\n「我離開的時候，她還活著。」'
+  },
+  {
+    id: 'chinatsuTime', owner: 'chinatsu', title: '離開時間',
+    unlocked: () => allTwo(['chinatsu', 'makiWitness']),
+    clue: '「……可能是我記錯了吧。我沒有特別看時間。」\n\n「那天我們吵得很不愉快，我也不想讓你們知道我在她那裡待了那麼久。」\n\n「如果小野寺小姐看到我是20:47，那應該就是20:47。」\n\n「但我離開的時候，莉奈真的還活著。」'
+  },
+  {
+    id: 'takumiBalcony', owner: 'takumi', title: '203號室的陽台',
+    unlocked: () => allTwo(['takumi', 'balcony']),
+    clue: '「……我不知道。」\n\n「陽台本來就連在一起，之前也不是沒有過去幫忙。」\n\n「那不代表我那天晚上進過她家。」'
+  },
+  {
+    id: 'makiWitness', owner: 'maki', title: '案發當晚還看到其他人嗎？',
+    unlocked: () => allTwo(['maki', 'chinatsu']) && caseTwo.paid >= 5,
+    clue: '「對了……藤原小姐那天也有來。」\n\n「我記得她離開的時候大概20:47。因為我正準備出門倒垃圾，看了一眼手機。」\n\n「她走得很快，臉色也不太好看。」'
+  },
+  {
+    id: 'makiRelation', owner: 'maki', title: '與莉奈的關係',
+    unlocked: () => allTwo(['maki', 'record']) && (caseTwo.nodes.has('B') || caseTwo.nodes.has('C')),
+    clue: '「我不是討厭她。只是……有一次我在走廊聽見她跟藤原小姐說話。」\n\n「她說：『妳不會真的以為，過了這麼多年，那件事就不存在了吧？』」\n\n「然後她一看到我，就馬上笑著跟我說『晚上好』。」\n\n「從那之後，我就不太想跟她有太多來往。」'
+  },
+  {
+    id: 'ryoShared', owner: 'ryo', title: '共同生活期間', tags: ['habit38'],
+    unlocked: () => allTwo(['ryo', 'heater']),
+    clue: '「生活習慣？……她很怕熱。」\n\n「以前一起住的時候，我喜歡把水開到四十一、四十二度，她每次都嫌燙。」\n\n「她自己泡澡大概就是三十八度左右。」\n\n「這跟案子有關嗎？」'
+  },
+  {
+    id: 'takumiConfront', owner: 'takumi', title: '對質',
+    unlocked: () => hasTwo('takumi') && caseTwo.nodes.has('A'),
+    clue: '「……好。我進去了。」\n\n「但我沒有殺她。」\n\n「那封信是我以前寫給她的。我那時候……以為我們之間可能有什麼。」\n\n「後來我才知道，她把信拍給別人看。」\n\n「我只是想把它拿回來。」\n\n「我只拿走裡面的信。信封我放回去了。」\n\n「整個拿走的話，她馬上就會知道有人翻過抽屜。」\n\n「我只是……不想再讓那封信留在她手上。」\n\n「我知道這算擅自闖入，所以一開始才沒說。」\n\n「但我真的沒有見到她。」'
+  }
+];
+const causeRecord = { id: 'cause', name: '初步死因', tags: ['headInjury'], clue: '死者後腦受到強烈撞擊，死因初步判定為顱內出血。' };
+
+// 節點以「判斷＋支持紀錄」驗證，不再使用兩張證據的固定配方。
+const noteNodes = [
+  {
+    id: 'A', title: '拓海隱瞞了什麼？',
+    unlocked: () => allTwo(['takumi', 'balcony', 'letter']),
+    record: '拓海當晚曾進入203號室，但他聲稱沒有見到莉奈。'
+  },
+  {
+    id: 'B', title: '21:12的浴室用水',
+    unlocked: () => allTwo(['maki', 'heater', 'ryoShared']),
+    record: '21:12的水聲本身不足以證明莉奈當時仍然活著。\n\n21:12的浴缸用水與莉奈平時的使用習慣不符。'
+  },
+  {
+    id: 'C', title: '浴室真的是第一現場嗎？',
+    unlocked: () => allTwo(['tea', 'cup', 'clean', 'cabinet']),
+    record: '莉奈受到致命傷的地點可能是203號室客廳。'
+  },
+  {
+    id: 'D', title: '重新建構時間線',
+    unlocked: () => allTwo(['phone2', 'record', 'makiWitness']) && caseTwo.nodes.has('B') && caseTwo.nodes.has('C'),
+    record: '莉奈可能在21:12以前便已死亡。'
+  }
+];
+const timelineRecords = [
+  { id: 'audioStart', time: '20:03', label: '手機錄音開始' },
+  { id: 'message', time: '20:16', label: '莉奈最後傳出訊息' },
+  { id: 'audioEnd', time: '20:20', label: '錄音結束' },
+  { id: 'leave', time: '20:47', label: '千夏離開203' },
+  { id: 'water', time: '21:12', label: '浴室預約自動注水' },
+  { id: 'found', time: '22:05', label: '遺體被發現' }
+];
 const finalQuestions = [
-  { id: 'culprit', label: '1. 犯人是誰？', options: [['chinatsu','藤原千夏'],['takumi','相澤拓海'],['maki','小野寺真紀'],['ryo','神谷遼']], answer: 'chinatsu' },
-  { id: 'place', label: '2. 莉奈真正死亡的地點？', options: [['living','203 客廳'],['bathroom','203 浴室'],['balcony','陽台']], answer: 'living' },
-  { id: 'water', label: '3. 21:12 的水聲是什麼？', options: [['automatic','預先設定的浴缸自動注水'],['rina','莉奈當時親手放水'],['neighbor','隔壁房間洗澡']], answer: 'automatic' },
-  { id: 'purpose', label: '4. 為什麼要製造這段水聲？', options: [['alibi','製造莉奈仍活著的假象，推遲死亡時間，建立不在場證明'],['cleaning','只為了清洗茶杯'],['habit','只是維持她平常的生活習慣']], answer: 'alibi' },
-  { id: 'conflict', label: '5. 最關鍵的矛盾之一是什麼？', options: [['heat','莉奈怕熱、平常約 38°C，但自動注水設為 42°C'],['silent','沒有水聲卻有使用紀錄'],['door','203 從未有人進入']], answer: 'heat' }
+  { id: 'culprit', label: '1. 造成高橋莉奈死亡的人是誰？', answer: 'chinatsu', options: [['ryo', '神谷遼'], ['chinatsu', '藤原千夏'], ['takumi', '相澤拓海'], ['maki', '小野寺真紀']] },
+  { id: 'place', label: '2. 莉奈受到致命傷的位置是？', answer: 'living', options: [['bathroom', '203號室浴室'], ['bedroom', '203號室臥室'], ['balcony', '203號室陽台'], ['living', '203號室客廳']] },
+  { id: 'water', label: '3. 21:12的水聲實際來自什麼？', answer: 'automatic', options: [['automatic', '事先設定的浴室自動注水'], ['rina', '莉奈當時親自操作浴室放水'], ['visitor', '當時進屋的人手動打開熱水'], ['leak', '浴室漏水持續流入排水管']] },
+  { id: 'purpose', label: '4. 為什麼要設定21:12自動注水？', answer: 'alibi', options: [['cleaning', '清除浴室痕跡，讓檢修漏水時不易被察覺'], ['habit', '完成莉奈原定的泡澡安排，讓生活紀錄不變'], ['alibi', '製造莉奈在21:12左右仍然活著的假象，誤導死亡時間'], ['intrusion', '掩蓋稍後有人闖入的聲音，讓鄰居無法察覺']] },
+  { id: 'aftermath', label: '5. 莉奈死亡後，現場發生了什麼？', answer: 'staged', options: [['bathScene', '浴室發生撞擊，客廳遭清理，注水用來洗去浴室痕跡'], ['staged', '遺體移至浴室、客廳遭清理，並以自動注水製造死亡時間與浴室死亡假象'], ['later', '遺體留在客廳，後來的入屋者搬動遺體並設定浴室注水'], ['unchanged', '遺體留在浴室，客廳只是先前打掃，注水按原定安排開始']] }
 ];
 
+// 初期只建立中性的項目與空白紀錄；調查後才填入指定文案。
 document.getElementById('two-people-list').innerHTML = twoPeople.map(person => `
-  <details class="investigation-card person-card"><summary><span class="person-name">${person.name}</span><span class="relation">${person.relation}</span><span class="expand-hint">查看紀錄 ＋</span></summary><div class="person-details"><p>${person.description}</p><button type="button" class="paper-button two-investigate" data-id="${person.id}"></button><p id="two-clue-${person.id}" class="clue" hidden></p></div></details>`).join('');
+  <details class="investigation-card person-card" id="person-${person.id}">
+    <summary><span class="person-name">${person.name}｜${person.age}歲</span><span class="relation">關係：${person.relation}</span><span class="expand-hint">查看紀錄 ＋</span></summary>
+    <div class="person-details"><p>${person.description}</p><button type="button" class="paper-button two-investigate" data-id="${person.id}">初次詢問 · 1 AP</button><p id="two-clue-${person.id}" class="clue" hidden></p><div id="followups-${person.id}"></div></div>
+  </details>`).join('');
 document.getElementById('two-evidence-list').innerHTML = twoEvidence.map(item => `
-  <article class="investigation-card evidence-card"><h3>${item.name}</h3><p>${item.description}</p><button type="button" class="paper-button two-investigate" data-id="${item.id}"></button><p id="two-clue-${item.id}" class="clue" hidden></p></article>`).join('');
-// 題目在達到門檻後才建立，未開放時不把答案選項放進網頁。
-function revealFinalQuestions() {
-  const form = document.getElementById('two-final-form');
-  const ready = finalReady();
-  form.hidden = !ready;
-  const container = document.getElementById('final-questions');
-  if (ready && !container.children.length) {
-    container.innerHTML = finalQuestions.map(q => `<label class="final-question">${q.label}<select name="${q.id}" required><option value="">請選擇</option>${q.options.map(([value,text]) => `<option value="${value}">${text}</option>`).join('')}</select></label>`).join('');
-  } else if (!ready) {
-    container.replaceChildren();
-  }
-  document.getElementById('final-gate').textContent = ready
-    ? 'FINAL DEDUCTION UNLOCKED／最終推理已開放'
-    : '最終推理尚未開放／目前資訊不足';
-  document.getElementById('two-submit').disabled = !ready;
-}
+  <article class="investigation-card evidence-card"><h3>${item.name}</h3><button type="button" class="paper-button two-investigate" data-id="${item.id}">調查 · 1 AP</button><p id="two-clue-${item.id}" class="clue" hidden></p></article>`).join('');
 
 function twoItem(id) { return [...twoPeople, ...twoEvidence].find(item => item.id === id); }
-function available(id) { return caseTwo.acquired.has(id) || caseTwo.deductions.has(id); }
-function isFree(item) { return item.free || (caseTwo.points === 0 && item.id !== 'letter'); }
 function investigateTwo(id) {
   const item = twoItem(id);
-  if (!item || caseTwo.acquired.has(id) || (item.requires && !available(item.requires))) return;
-  if (!isFree(item)) {
-    if (caseTwo.points <= 0) return;
-    caseTwo.points -= 1;
-    caseTwo.paid += 1;
-  }
+  if (!item || caseTwo.acquired.has(id) || caseTwo.points <= 0) return;
+  caseTwo.points -= 1;
+  caseTwo.paid += 1;
   caseTwo.acquired.add(id);
   const clue = document.getElementById(`two-clue-${id}`);
   clue.textContent = item.clue;
   clue.hidden = false;
   updateTwo();
 }
+function askFollowup(id) {
+  const item = twoFollowups.find(item => item.id === id);
+  if (!item || !item.unlocked() || caseTwo.followups.has(id)) return;
+  caseTwo.followups.add(id);
+  const clue = document.getElementById(`followup-clue-${id}`);
+  clue.textContent = item.clue;
+  clue.hidden = false;
+  updateTwo();
+}
 document.querySelectorAll('.two-investigate').forEach(button => button.addEventListener('click', () => investigateTwo(button.dataset.id)));
+document.getElementById('two-people-list').addEventListener('click', event => {
+  const button = event.target.closest('[data-followup]');
+  if (button) askFollowup(button.dataset.followup);
+});
 document.querySelectorAll('.two-tab').forEach(button => button.addEventListener('click', () => {
   document.querySelectorAll('.two-panel').forEach(panel => { panel.hidden = panel.id !== `two-${button.dataset.panel}`; });
-  document.querySelectorAll('.two-tab').forEach(tab => { const active = tab === button; tab.classList.toggle('active',active); tab.setAttribute('aria-pressed',String(active)); });
+  document.querySelectorAll('.two-tab').forEach(tab => {
+    const active = tab === button;
+    tab.classList.toggle('active', active);
+    tab.setAttribute('aria-pressed', String(active));
+  });
 }));
 
-// 保留選擇；只把已取得的資料放進比對清單，未調查內容不會洩漏。
-function fillSelect(id, entries) {
-  const select = document.getElementById(id);
-  const previous = select.value;
-  select.replaceChildren(new Option('請選擇', ''));
-  entries.forEach(([value,text]) => select.add(new Option(text,value)));
-  if (entries.some(([value]) => value === previous)) select.value = previous;
+function renderFollowups() {
+  twoFollowups.filter(item => item.unlocked()).forEach(item => {
+    let section = document.getElementById(`followup-${item.id}`);
+    if (!section) {
+      section = document.createElement('section');
+      section.id = `followup-${item.id}`;
+      section.className = 'followup newly-available';
+      section.innerHTML = `<h3>${item.title} <span class="new-label">NEW</span></h3><button class="paper-button" data-followup="${item.id}" type="button">${item.id === 'takumiConfront' ? '對質' : '追加詢問'} · 免費</button><p id="followup-clue-${item.id}" class="clue" hidden></p>`;
+      document.getElementById(`followups-${item.owner}`).append(section);
+    }
+    const done = caseTwo.followups.has(item.id);
+    section.classList.toggle('newly-available', !done);
+    section.querySelector('.new-label').hidden = done;
+    const button = section.querySelector('button');
+    button.disabled = done;
+    button.textContent = done ? (item.id === 'takumiConfront' ? '已對質' : '已詢問') : `${item.id === 'takumiConfront' ? '對質' : '追加詢問'} · 免費`;
+  });
+  twoPeople.forEach(person => {
+    const summary = document.querySelector(`#person-${person.id} summary`);
+    let badge = summary.querySelector('.new-label');
+    const pending = twoFollowups.some(item => item.owner === person.id && item.unlocked() && !caseTwo.followups.has(item.id));
+    if (pending && !badge) {
+      badge = document.createElement('span');
+      badge.className = 'new-label';
+      badge.textContent = 'NEW';
+      summary.append(badge);
+    }
+    if (badge) badge.hidden = !pending;
+  });
 }
+
+function acquiredRecords() {
+  return [causeRecord,
+    ...[...twoPeople, ...twoEvidence].filter(item => caseTwo.acquired.has(item.id)),
+    ...twoFollowups.filter(item => caseTwo.followups.has(item.id)).map(item => ({ ...item, name: `${twoPeople.find(p => p.id === item.owner).name}／${item.title}` }))
+  ];
+}
+function recordCheckboxes() {
+  return acquiredRecords().map(item => `<label class="record-choice"><input type="checkbox" name="records" value="${item.id}"><span>${item.name}</span></label>`).join('');
+}
+function radioChoices(name, entries) {
+  return entries.map(([value, text]) => `<label class="note-choice"><input type="radio" name="${name}" value="${value}" required><span>${text}</span></label>`).join('');
+}
+function noteForm(node) {
+  if (node.id === 'A') return `<p>根據目前的調查，拓海最可能隱瞞了什麼？</p><fieldset>${radioChoices('judgment', [['early','他在20:55以前就回到公寓'],['entered','他當晚曾進入203號室'],['conflict','他與莉奈發生肢體衝突'],['heater','他操作了浴室給湯器']])}</fieldset>`;
+  if (node.id === 'B') return `<p>根據樓下住戶證詞，21:12至21:15曾聽見203號室浴室傳出水聲，因此警方初步將死亡時間推定於21:12之後。</p><fieldset class="supporting-records"><legend>從已取得的調查紀錄中，選取足以讓這項判斷需要重新檢視的資訊。</legend><div class="record-options">${recordCheckboxes()}</div></fieldset>`;
+  if (node.id === 'C') return `<fieldset><legend>莉奈受到致命傷的位置可能是？</legend>${radioChoices('judgment', [['bath','203號室浴室'],['living','203號室客廳'],['bedroom','203號室臥室'],['balcony','203號室陽台']])}</fieldset><fieldset class="supporting-records"><legend>從已取得的調查紀錄中，選取支持判斷的資訊。</legend><div class="record-options">${recordCheckboxes()}</div></fieldset>`;
+  return `<fieldset class="timeline-editor"><legend>重建各項紀錄的時間</legend>${[4,2,0,5,3,1].map(index => { const entry = timelineRecords[index]; return `<label>${entry.label}<select name="${entry.id}" required><option value="">選擇時間</option>${timelineRecords.map(item => `<option value="${item.time}">${item.time}</option>`).join('')}</select></label>`; }).join('')}</fieldset><fieldset><legend>原推定死亡時間</legend>${radioChoices('judgment', [['after','莉奈在21:12之後受到致命傷。'],['before','莉奈可能在21:12以前便已死亡。'],['water','21:12的水聲可確定莉奈當時仍然活著。']])}</fieldset>`;
+}
+function renderNotes() {
+  noteNodes.filter(node => node.unlocked()).forEach(node => {
+    let section = document.getElementById(`note-${node.id}`);
+    if (!section) {
+      section = document.createElement('article');
+      section.id = `note-${node.id}`;
+      section.className = 'reasoning-block note-sheet newly-available';
+      section.innerHTML = `<p class="document-label">NOTE ${node.id} / <span class="note-state">NEW</span></p><h3>${node.title}</h3><form data-node="${node.id}">${noteForm(node)}<button class="paper-button" type="submit">記錄判斷</button></form><p class="note-feedback" role="status"></p><p class="note-record clue" hidden></p>`;
+      document.getElementById('two-notes').append(section);
+    }
+    const done = caseTwo.nodes.has(node.id);
+    section.classList.toggle('newly-available', !done);
+    section.classList.toggle('confirmed-note', done);
+    section.querySelector('.note-state').textContent = done ? '已記錄' : 'NEW';
+    const form = section.querySelector('form');
+    form.hidden = done;
+    // 取得新紀錄後更新勾選列表，保留玩家已勾選的內容。
+    if (!done && ['B','C'].includes(node.id)) {
+      const selected = [...form.querySelectorAll('input[name="records"]:checked')].map(input => input.value);
+      const options = form.querySelector('.record-options');
+      if (options.children.length !== acquiredRecords().length) {
+        options.innerHTML = recordCheckboxes();
+        options.querySelectorAll('input').forEach(input => { input.checked = selected.includes(input.value); });
+      }
+    }
+    const record = section.querySelector('.note-record');
+    const mayRecord = done && (node.id !== 'A' || hasTwo('takumiConfront'));
+    record.hidden = !mayRecord;
+    if (mayRecord) record.textContent = node.record;
+  });
+}
+
+// 支持紀錄要涵蓋命題所需的事實；可以引用不同來源的同類資訊。
+function supportsJudgment(form, requiredTags) {
+  const selected = new FormData(form).getAll('records');
+  const records = acquiredRecords().filter(item => selected.includes(item.id));
+  const tags = new Set(records.flatMap(item => item.tags || []));
+  return records.length > 0 && requiredTags.every(tag => tags.has(tag))
+    && records.every(item => (item.tags || []).some(tag => requiredTags.includes(tag)) || item.id === 'maki' && requiredTags.includes('scheduledWater'));
+}
+function validateNode(id, form) {
+  const answers = new FormData(form);
+  if (id === 'A') return answers.get('judgment') === 'entered';
+  if (id === 'B') return supportsJudgment(form, ['scheduledWater','water42','habit38']);
+  if (id === 'C') return answers.get('judgment') === 'living' && supportsJudgment(form, ['headInjury','victimBlood','wipedFloor','spilledTea']);
+  return answers.get('judgment') === 'before' && timelineRecords.every(item => answers.get(item.id) === item.time);
+}
+document.getElementById('two-notes').addEventListener('submit', event => {
+  event.preventDefault();
+  const form = event.target.closest('form[data-node]');
+  if (!form) return;
+  const node = noteNodes.find(node => node.id === form.dataset.node);
+  if (!node || !node.unlocked() || caseTwo.nodes.has(node.id)) return;
+  const feedback = form.parentElement.querySelector('.note-feedback');
+  if (!validateNode(node.id, form)) {
+    feedback.textContent = '目前的資訊不足以支持這項判斷。';
+    return;
+  }
+  caseTwo.nodes.add(node.id);
+  feedback.textContent = '';
+  // 每個初步節點只返還一次；沒有零 AP 免費調查的保底機制。
+  if (['A','B','C'].includes(node.id) && !caseTwo.rewards.has(node.id)) {
+    caseTwo.rewards.add(node.id);
+    caseTwo.points = Math.min(CASE_TWO_AP, caseTwo.points + 1);
+  }
+  if (node.id === 'D') {
+    const announcement = document.getElementById('timeline-announcement');
+    announcement.textContent = 'TIMELINE CONTRADICTION';
+    announcement.hidden = false;
+  }
+  updateTwo();
+});
+
 function finalReady() {
-  return ['timeConflict','reconstructed','staging'].every(id => caseTwo.deductions.has(id)) && caseTwo.confronted.has('chinatsu') && caseTwo.acquired.has('archive');
+  return ['A','B','C','D'].every(id => caseTwo.nodes.has(id))
+    && allTwo(['takumiConfront', 'chinatsuAudio', 'chinatsuTime', 'bath']);
+}
+function revealFinalQuestions() {
+  const container = document.getElementById('two-final-content');
+  const gate = document.getElementById('final-gate');
+  if (!finalReady()) {
+    gate.textContent = 'FINAL DEDUCTION\n\n最終推理尚未開放。\n\n目前掌握的資訊不足以重建案件全貌。';
+    return;
+  }
+  if (container.children.length) return;
+  gate.textContent = 'FINAL DEDUCTION UNLOCKED';
+  gate.classList.add('unlocked-gate');
+  container.innerHTML = `<form id="two-final-form">${finalQuestions.map(q => `<label class="final-question">${q.label}<select name="${q.id}" required><option value="">請選擇</option>${q.options.map(([value, text]) => `<option value="${value}">${text}</option>`).join('')}</select></label>`).join('')}<button id="two-submit" class="paper-button" type="submit">提交最終推理</button></form><p id="two-final-feedback" role="status"></p>`;
 }
 function updateTwo() {
   document.getElementById('two-points').textContent = caseTwo.points;
   document.getElementById('two-action-message').textContent = caseTwo.points === 0
-    ? '行動力已耗盡：必要資料開放免費補充核對。組合、對質與最終推理仍可操作。'
-    : '調查消耗 1 點；組合與對質免費。關鍵推論首次成功返還 1 點，必要資料在零點時免費核對。';
+    ? '剩餘AP：0。追加詢問、對質與調查筆記不消耗AP。'
+    : '初次詢問與新證物調查：1 AP。追加詢問、對質與調查筆記：0 AP。';
   document.querySelectorAll('.two-investigate').forEach(button => {
     const item = twoItem(button.dataset.id);
     const done = caseTwo.acquired.has(item.id);
-    const locked = item.requires && !available(item.requires);
-    button.disabled = done || locked || (caseTwo.points === 0 && !isFree(item));
-    button.textContent = done ? (twoPeople.includes(item) ? '已詢問' : '已調查') : locked ? '尚未解鎖' : isFree(item) ? '免費核對' : caseTwo.points === 0 ? '行動力不足' : (twoPeople.includes(item) ? '詢問 · 1 行動力' : '調查 · 1 行動力');
-    button.closest('.investigation-card').classList.toggle('investigated',done);
-    button.closest('.investigation-card').classList.toggle('newly-available',!done && !locked && isFree(item));
+    button.disabled = done || caseTwo.points <= 0;
+    button.textContent = done ? (twoPeople.includes(item) ? '已詢問' : '已調查') : caseTwo.points <= 0 ? 'AP不足' : (twoPeople.includes(item) ? '初次詢問 · 1 AP' : '調查 · 1 AP');
+    button.closest('.investigation-card').classList.toggle('investigated', done);
   });
-  if (caseTwo.acquired.has('maki') && caseTwo.acquired.has('record')) {
-    document.getElementById('two-clue-maki').textContent = twoPeople.find(p => p.id === 'maki').clue + ' 免費追問／提到錄音中的語氣後，真紀補充：「以前我在樓梯轉角聽見她對千夏說，妳不會真的以為，過了這麼多年，那件事就不存在了吧？千夏離開後，她看見我，立刻又笑著說晚上好，今天也很冷呢。我只是不想惹麻煩。」她對水聲的目擊沒有改變，改變的只是她願意說出的背景。';
-  }
-  const entries = [...twoPeople,...twoEvidence].filter(item => caseTwo.acquired.has(item.id)).map(item => [item.id, item.name]);
-  deductions.filter(d => caseTwo.deductions.has(d.id)).forEach(d => entries.push([d.id, `推論：${d.title}`]));
-  ['combine-first','combine-second','confront-evidence'].forEach(id => fillSelect(id, entries));
-  fillSelect('confront-person', twoPeople.filter(p => ['takumi','chinatsu'].includes(p.id) && caseTwo.acquired.has(p.id)).map(p => [p.id, p.id === 'takumi' ? '拓海：我沒有進過莉奈家' : '千夏：20:30 就離開了']));
-  document.getElementById('deduction-list').innerHTML = deductions.filter(d => caseTwo.deductions.has(d.id)).map(d => `<article class="paper-note"><h3>${d.title}</h3><p>${d.text}</p></article>`).join('');
-  document.getElementById('confrontations').innerHTML = [...caseTwo.confronted].map(id => `<p class="paper-note">${confrontationText[id]}</p>`).join('');
-  const conflict = caseTwo.deductions.has('timeConflict');
-  const rebuilt = caseTwo.deductions.has('reconstructed');
-  document.getElementById('initial-time').classList.toggle('struck-time',conflict);
-  document.getElementById('current-time').textContent = rebuilt ? '20:16–20:47' : conflict ? 'UNKNOWN' : '';
-  const timeline = document.getElementById('timeline-log');
-  if (rebuilt) {
-    // 重建成功也只顯示已取得的時刻，拓海入屋要等對質承認後才寫入。
-    const events = [];
-    if (caseTwo.acquired.has('habit')) events.push('18:30 回家並洗澡');
-    if (caseTwo.acquired.has('chinatsu')) events.push('19:45 千夏到訪（自述）');
-    if (caseTwo.acquired.has('record')) events.push('20:03 錄音開始', '約 20:20 爭執聲、碰撞聲與錄音中斷');
-    if (caseTwo.acquired.has('phone2')) events.push('20:16 最後正常操作');
-    if (caseTwo.acquired.has('maki')) events.push('20:47 千夏離開');
-    if (caseTwo.acquired.has('takumi')) events.push('20:55 拓海回家（自述）');
-    if (caseTwo.confronted.has('takumi')) events.push('約 21:00 拓海取信（對質證詞）');
-    if (caseTwo.acquired.has('heater')) events.push('21:12 自動注水');
-    events.push('約 22:05 發現遺體');
-    events.sort((a, b) => a.match(/\d{2}:\d{2}/)[0].localeCompare(b.match(/\d{2}:\d{2}/)[0]));
-    timeline.textContent = `TIMELINE RECONSTRUCTED／${events.join(' → ')}。可能死亡區間：20:16–20:47。`;
-  } else {
-    timeline.textContent = conflict
-      ? 'TIMELINE CONTRADICTION／原推定死亡時間已撤回。推定死亡時間：UNKNOWN。'
-      : '警方紀錄：21:12 熱水使用紀錄與樓下水聲證詞，推定死亡時間 21:12–22:05。';
-  }
-  if (caseTwo.confronted.has('takumi') && caseTwo.deductions.has('staging')) {
-    const note = document.createElement('p');
-    note.className = 'paper-note';
-    note.textContent = '核對結果／拓海約 21:00 入屋，晚於重建的死亡時段。客廳與浴室痕跡比對支持莉奈當時已被移到浴室。說謊 ≠ 犯人。';
-    document.getElementById('confrontations').append(note);
-  }
-  updateCombinationHint();
+  renderFollowups();
+  renderNotes();
+  const revised = caseTwo.nodes.has('D');
+  document.getElementById('initial-time').classList.toggle('struck-time', revised);
+  document.getElementById('current-time').textContent = revised ? '重新調查中' : '';
   revealFinalQuestions();
 }
 
-// 連續三次失敗後才提供可選提示；成功後重置。提示不列出配對答案。
-function updateCombinationHint() {
-  const hint = document.getElementById('combination-hint');
-  hint.hidden = caseTwo.combinationMistakes < 3;
-  if (hint.hidden) hint.open = false;
-  document.getElementById('combination-hint-text').textContent =
-    caseTwo.acquired.has('ryo') && caseTwo.acquired.has('heater') && !caseTwo.deductions.has('temperature')
-      ? '比較死者平常的生活習慣與當晚設備紀錄。'
-      : '比較已取得的紀錄與證詞，留意它們的描述是否一致。';
-}
-function failedCombination(message) {
-  caseTwo.combinationMistakes += 1;
-  const output = document.getElementById('combine-feedback');
-  output.className = '';
-  output.textContent = message;
-  updateCombinationHint();
-}
-
-document.getElementById('combine-form').addEventListener('submit', event => {
-  event.preventDefault();
-  const a = document.getElementById('combine-first').value;
-  const b = document.getElementById('combine-second').value;
-  const output = document.getElementById('combine-feedback');
-  if (!available(a) || !available(b)) return;
-  const rule = deductions.find(d => d.pair.includes(a) && d.pair.includes(b) && a !== b);
-  if (!rule) { failedCombination('這兩項資訊目前無法形成有效推論。'); return; }
-  if (rule.requires && !available(rule.requires)) { failedCombination('目前資料不足以形成這份推論，請繼續整理已取得的資訊。'); return; }
-  if (caseTwo.deductions.has(rule.id)) { caseTwo.combinationMistakes = 0; updateCombinationHint(); output.className = ''; output.textContent = '這份推論已記錄，不會重複返還行動力。'; return; }
-  caseTwo.combinationMistakes = 0;
-  caseTwo.deductions.add(rule.id);
-  if (rule.reward) caseTwo.points = Math.min(12, caseTwo.points + 1);
-  output.textContent = `推論成立：${rule.title}${rule.reward ? '／返還 1 點行動力' : ''}`;
-  output.className = 'success-feedback';
-  updateTwo();
+document.getElementById('two-final-content').addEventListener('change', () => {
+  const feedback = document.getElementById('two-final-feedback');
+  if (feedback) feedback.textContent = '';
 });
-document.getElementById('confront-form').addEventListener('submit', event => {
+document.getElementById('two-final-content').addEventListener('submit', event => {
   event.preventDefault();
-  const person = document.getElementById('confront-person').value;
-  const proof = document.getElementById('confront-evidence').value;
-  const output = document.getElementById('confront-feedback');
-  if (!caseTwo.acquired.has(person) || !available(proof)) return;
-  if (caseTwo.confronted.has(person)) { output.textContent = '已完成這段對質，新證詞保留在下方。'; return; }
-  if (person === 'takumi' && proof === 'balcony' && !caseTwo.acquired.has('letter')) {
-    output.textContent = '這份資料尚不足以反駁，請繼續蒐集佐證。'; return;
-  }
-  const correct = person === 'takumi' ? proof === 'balcony' && caseTwo.acquired.has('letter')
-    : person === 'chinatsu' && proof === 'maki' && available('reconstructed');
-  if (!correct) { output.textContent = '這份資料尚不足以反駁，請繼續蒐集佐證。'; return; }
-  caseTwo.confronted.add(person);
-  output.textContent = 'CONTRADICTION DETECTED／新證詞已免費解鎖。';
-  output.className = 'success-feedback';
-  updateTwo();
-});
-const twoFinalForm = document.getElementById('two-final-form');
-twoFinalForm.addEventListener('change', () => { document.getElementById('two-final-feedback').textContent = ''; });
-twoFinalForm.addEventListener('submit', event => {
-  event.preventDefault();
-  if (!finalReady()) return;
-  const answers = Object.fromEntries(new FormData(twoFinalForm));
+  if (!finalReady() || caseTwo.solved) return;
+  const form = event.target.closest('#two-final-form');
+  if (!form) return;
+  const answers = Object.fromEntries(new FormData(form));
   if (finalQuestions.some(q => !answers[q.id])) return;
   caseTwo.answers = answers;
   const correctCount = finalQuestions.filter(q => answers[q.id] === q.answer).length;
   caseTwo.attempts += 1;
   if (caseTwo.firstAccuracy === null) caseTwo.firstAccuracy = correctCount;
-  if (correctCount < 5) {
-    document.getElementById('two-final-feedback').textContent = `目前 ${correctCount}／5 題吻合已取得的線索。請重讀時間、水溫與客廳紀錄；可重新作答，不扣行動力。`;
+  if (correctCount !== 5) {
+    document.getElementById('two-final-feedback').textContent = '這項推論與現有紀錄仍有矛盾。';
     return;
   }
   caseTwo.solved = true;
   document.getElementById('two-status').textContent = 'SOLVED';
   renderEnding();
-  showScreen('ending-screen','ending-heading');
+  showScreen('ending-screen', 'ending-heading');
 });
+
 function renderEnding() {
-  // 完整真相僅在五題正確後重建；關鍵資訊已在結案前的資料中出現。
-  const story = [
-    '19:45，千夏來到 203。她不是帶著殺人的計畫來的，她想結束十年的控制，請莉奈刪除高中事件的資料，從此不再聯絡。',
-    '20:03，莉奈偷偷開啟錄音。20:05 起，兩人爭執。莉奈否認威脅，卻再次提醒她：「別忘記以前發生過什麼。」20:16，莉奈仍傳出正常訊息。',
-    '約 20:18–20:20，千夏試圖搶走手機。推擠中，莉奈向後跌倒，後腦撞上客廳矮櫃的邊角。茶杯碎了，茶水灑進地板縫。莉奈死在客廳，錄音約 20:20 中斷。',
-    '千夏本來仍可以報警。但在 20:25–20:45，她選擇搬動遺體、擦拭客廳、收起碎杯。她把莉奈移到浴室，預約 21:12 自動注入 42°C 的熱水。20:47，她從玄關離開。',
-    '20:55，拓海回到 204。約 21:00，他從陽台翻入 203，只為拿回被拍照嘲笑的情書。他沒有進浴室，不知道莉奈已死。他說謊是為了隱瞞入屋與羞恥，不是因為殺人。',
-    '21:12，機器準時注水。真紀確實聽到了水聲，卻把水聲理解成莉奈仍活著。遼確實出軌、威脅並傷害過莉奈，但沒有殺她；他的生活習慣證詞揭開了 42°C 的矛盾。約 22:05，房東發現遺體。',
-    '封存資料證明：高中時匿名散播私人資訊的人，其實是莉奈。千夏當年說出了傷人的話與別人的秘密；莉奈把它們散播出去，導致那名女生被排擠並自殺。她又扮演安慰者與保密者，讓千夏以為自己間接害了同學，用罪惡感控制她多年。',
-    '莉奈擅長觀察人的弱點，用溫柔維持依賴。她害怕被拋下，害怕別人發現不再需要她。但這不能替千夏免責。死亡最初可能是意外；搬動遺體、偽造現場、欺騙警方，都是千夏自己的選擇。',
-    '「如果我早一點知道……」\n「當年的事情不是我做的……」\n「我是不是就能早一點離開她？」',
-    '她停了很久。',
-    '「我那天去找她的時候，真的只是想告訴她……」\n「以後不要再聯絡了。」\n「就只有這樣而已。」'
+  // 高中資料只在犯罪重建讀完後建立，從一般證物和前期 DOM 移除。
+  const crime = [
+    '19:45左右，千夏前往203找莉奈。約20:05，兩人因過去事件開始爭執。莉奈留下了手機錄音。20:16，莉奈仍正常傳出訊息。',
+    '爭執中，千夏試圖搶走莉奈的手機。兩人拉扯，莉奈失去平衡，後腦撞上客廳矮櫃。這次致命撞擊不是預謀殺人。',
+    '莉奈失去反應後，千夏恐慌。她將莉奈移至浴室，清理客廳部分痕跡，處理破裂茶杯，設定21:12浴室預約自動注水，水溫42°C。',
+    '她要製造莉奈在21:12左右仍活著、正在洗澡的假象，將死亡時間往後推。千夏約20:47離開203。',
+    '約20:55，拓海回到204。約21:00，他從204陽台翻入203，直接前往莉奈臥室的書桌抽屜，只取走自己以前寫給莉奈的信紙，把空信封留回原處。他沒有進浴室，沒有看到莉奈，再從陽台返回204。',
+    '21:12，自動注水開始。真紀聽見水聲，以為莉奈當時正在洗澡。22:05，管理人發現遺體。',
+    '致命撞擊不是預謀。但搬動遺體、清理現場、設定自動注水、製造假死亡時間、對警方說謊，都是千夏後續主動做出的選擇。'
   ];
-  document.getElementById('ending-story').replaceChildren(...story.map(text => { const p = document.createElement('p'); p.textContent = text; return p; }));
-  const score = caseTwo.firstAccuracy * 8 + 15 + (caseTwo.confronted.has('takumi') ? 20 : 0) + 10 + (caseTwo.acquired.has('cabinet') && caseTwo.acquired.has('bath') ? 10 : 0) + (caseTwo.paid <= 12 ? 5 : 0);
-  caseTwo.rank = score >= 95 ? 'S' : score >= 80 ? 'A' : score >= 65 ? 'B' : 'C';
-  document.getElementById('deduction-rank').textContent = `DEDUCTION RANK / ${caseTwo.rank}`;
-  document.getElementById('rank-detail').textContent = `首次推理 ${caseTwo.firstAccuracy}／5 · 時間矛盾已發現 · 拓海對質${caseTwo.confronted.has('takumi') ? '已完成' : '未完成'} · 高中真相已核對 · 付費調查 ${caseTwo.paid} 次。評價不影響結案。`;
+  const school = [
+    '案件破解後，警方從莉奈保存的舊資料與數位資料中確認：高中時真正匿名散播那些內容的人，其實是莉奈。',
+    '高中時期，千夏非常討厭班上一名女同學。她私下向自己最信任的莉奈抱怨對方，說過很惡毒的話，也把對方的一些私人資訊告訴莉奈。',
+    '之後，這些內容遭人匿名散播。那名同學遭受長期且嚴重的校園霸凌、排擠與孤立，最後因霸凌而轉學。',
+    '千夏一直認為這場悲劇的源頭是自己。她認為那些內容只有自己與莉奈知道，莉奈卻始終否認曾將內容告訴任何人。千夏長年背負「是自己害那名同學遭霸凌並轉學」的罪惡感，莉奈利用這份罪惡感控制她多年。',
+    '千夏確實說過惡毒的話，也確實洩漏過他人隱私。但她沒有把內容公開散播，也不是她主動發起後續霸凌。她多年來背負的罪惡感遠超過她真正做過的事。',
+    '莉奈曾長期操控、傷害他人，但她不因此應該死亡。千夏長期受到操控，但她在莉奈死亡後偽造現場與欺騙警方，仍需為自己的選擇負責。',
+    '「……原來不是我。」\n\n「那件事……不是我做的。」\n\n「如果我早一點知道……」\n\n「我是不是就能早一點離開她？」',
+    '……',
+    '「我那天去找她，真的只是想告訴她……」\n\n「以後不要再聯絡了。」\n\n「就只有這樣而已。」'
+  ];
+  const story = caseTwo.truthStage === 'crime' ? crime : school;
+  document.getElementById('ending-story').replaceChildren(...story.map(text => {
+    const paragraph = document.createElement('p');
+    paragraph.textContent = text;
+    return paragraph;
+  }));
+  document.getElementById('continue-truth').hidden = caseTwo.truthStage !== 'crime';
+  document.getElementById('close-case').hidden = caseTwo.truthStage !== 'school';
+  const score = caseTwo.firstAccuracy * 10 + caseTwo.nodes.size * 8 + (hasTwo('makiRelation') ? 8 : 0) + (caseTwo.paid <= 14 ? 10 : 5);
+  const rank = score >= 95 ? 'S' : score >= 80 ? 'A' : score >= 65 ? 'B' : 'C';
+  document.getElementById('deduction-rank').textContent = `DEDUCTION RANK / ${rank}`;
+  document.getElementById('rank-detail').textContent = `首次推理 ${caseTwo.firstAccuracy}／5 · 調查 ${caseTwo.paid} AP`;
 }
+document.getElementById('continue-truth').addEventListener('click', () => {
+  if (!caseTwo.solved || caseTwo.truthStage !== 'crime') return;
+  caseTwo.truthStage = 'school';
+  renderEnding();
+  window.scrollTo(0, 0);
+  document.getElementById('ending-heading').focus();
+});
 document.getElementById('close-case').addEventListener('click', async event => {
+  if (!caseTwo.solved || caseTwo.truthStage !== 'school' || caseTwo.closed) return;
   event.currentTarget.disabled = true;
   const screen = document.getElementById('ending-screen');
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
